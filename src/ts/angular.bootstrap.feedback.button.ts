@@ -9,18 +9,18 @@ module AngularBootstrapFeedback {
 
         constructor() {
             // this.controller = ["angularFactory", ButtonController];
-            this.controller = [ButtonController];
+            this.controller = ['angularBootstrapFeedbackFactory', ButtonController];
             this.template = ['$templateCache', ($templateCache: ng.ITemplateCacheService): Object => $templateCache.get('angular.bootstrap.feedback.button.html')];
         }
     }
 
     class ButtonController {
 
-        // constructor(private factory: IFactory) { }
+        constructor(private factory: IFactory) { }
 
-        // openModal() {
-        //     this.factory.openModal();
-        // }
+        openModal() {
+            this.factory.openModal();
+        }
         //
         // cancelScreenshotPressed() {
         //     this.factory.isScreenshotMode = false;

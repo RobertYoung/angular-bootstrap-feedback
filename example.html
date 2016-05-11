@@ -42,7 +42,54 @@
     </nav>
 
     <div class="container">
-        <angular-bootstrap-feedback></angular-bootstrap-feedback>
+        <angular-bootstrap-feedback>
+          <div class="row">
+              <div class="col-xs-12">
+                  <div class="alert alert-info" role="alert">
+                      We would love to hear your thoughts or if you have encountered any problems.
+                  </div>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-lg-6">
+                  <!-- FEEDBACK TYPE -->
+                  <div class="form-group">
+                      <label for="userFeedbackCategory_field" class="control-label">Feedback type:</label>
+                      <brookson-input-check-buttons field="userFeedbackCategory" label="Feedback type"
+                                                    ng-model="$ctrl.factory.userFeedback.userFeedbackCategoryId" is-required="true"
+                                                    buttons="$ctrl.factory.userFeedbackCategories"></brookson-input-check-buttons>
+                  </div>
+                  <!-- /FEEDBACK TYPE -->
+                  <!-- DESCRIPTION -->
+                  <div class="form-group">
+                      <label for="description_field" class="control-label">Comment:</label>
+                      <brookson-input-textarea field="description" label="Comment"
+                                               ng-model="$ctrl.factory.userFeedback.description" is-required="true" ng-maxlength="250"
+                                               textbox-style="{'min-height': '80px'}"></brookson-input-textarea>
+                  </div>
+                  <!-- /DESCRIPTION -->
+                  <!-- EMAIL -->
+                  <div class="form-group">
+                      <label for="email_field" class="control-label">Email:</label>
+                      <brookson-input-email field="email" label="Email" placeholder="Email" ng-model="$ctrl.factory.userFeedback.email"
+                                            is-required="true" ng-maxlength="200"></brookson-input-email>
+                  </div>
+                  <!-- /EMAIL -->
+              </div>
+
+              <div class="col-lg-6">
+                  <div class="feedback-screenshot">
+                      <img ng-src="{{$ctrl.factory.userFeedback.screenshotBase64}}" />
+                  </div>
+                  <div class="btn-toolbar">
+                      <button class="btn btn-default" type="button" ng-click="$ctrl.takeScreenshotButtonPressed()">
+                          <i class="fa fa-camera" aria-hidden="true"></i>
+                          Take Screenshot
+                      </button>
+                  </div>
+              </div>
+          </div>
+        </angular-bootstrap-feedback>
     </div><!-- /.container -->
 
     <!-- VENDOR -->
@@ -50,6 +97,7 @@
     <script src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="./bower_components/angular/angular.min.js"></script>
     <script src="./bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="./bower_components/html2canvas/build/html2canvas.min.js"></script>
 
     <!-- SOURCE -->
     <script src="./src/lib/output.js"></script>

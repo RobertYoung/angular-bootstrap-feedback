@@ -8,19 +8,32 @@ var AngularBootstrapFeedback;
 (function (AngularBootstrapFeedback) {
     var Button = (function () {
         function Button() {
-            // this.controller = ["angularFactory", ButtonController];
-            this.controller = ['angularBootstrapFeedbackFactory', ButtonController];
+            this.transclude = true;
+            this.controller = ['angularBootstrapFeedbackFactory', '$transclude', ButtonController];
             this.template = ['$templateCache', function ($templateCache) { return $templateCache.get('angular.bootstrap.feedback.button.html'); }];
         }
         return Button;
     }());
     AngularBootstrapFeedback.Button = Button;
     var ButtonController = (function () {
-        function ButtonController(factory) {
+        function ButtonController(factory, transclude) {
+            var _this = this;
             this.factory = factory;
+            this.transclude = transclude;
+            this.transclude(function (value) {
+                _this.factory.transcludedContent = value;
+            });
         }
         ButtonController.prototype.openModal = function () {
             this.factory.openModal();
+        };
+        ButtonController.prototype.cancelScreenshotPressed = function () {
+            this.factory.isScreenshotMode = false;
+            this.factory.showModal();
+            this.factory.destroyCanvas();
+        };
+        ButtonController.prototype.takeScreenshotPressed = function () {
+            this.factory.takeScreenshot();
         };
         return ButtonController;
     }());
@@ -33,15 +46,17 @@ angular
 var AngularBootstrapFeedback;
 (function (AngularBootstrapFeedback) {
     var Factory = (function () {
-        function Factory($uibModal, $document, $templateCache) {
+        function Factory($uibModal, $document, $templateCache, $timeout) {
             var _this = this;
             this.$uibModal = $uibModal;
             this.$document = $document;
             this.$templateCache = $templateCache;
+            this.$timeout = $timeout;
             // HTML Selectors //
             this.modalElementSelector = 'div[uib-modal-window]';
             this.modalBackdropElementSelector = 'div[uib-modal-backdrop]';
             this.sendFeedbackElementSelector = 'div.send-feedback';
+            this.modalBodyElementSelector = this.modalElementSelector + " .modal-body";
             this.isDrawing = false;
             this.onMouseDown = function (event) {
                 _this.centerX = event.pageX;
@@ -106,7 +121,14 @@ var AngularBootstrapFeedback;
         };
         Factory.prototype.closeModal = function () {
             this.$uibModalInstance.close();
-            // this.destroyCanvas();
+            this.destroyCanvas();
+        };
+        Factory.prototype.appendTransclodedContent = function () {
+            var _this = this;
+            this.$timeout(function () {
+                var element = angular.element(_this.modalBodyElementSelector);
+                element.append(_this.transcludedContent);
+            });
         };
         // User Information //
         Factory.prototype.getUserAgentInfo = function () {
@@ -136,43 +158,37 @@ var AngularBootstrapFeedback;
         //     this.userFeedback.url = this.$location.absUrl();
         // }
         // Screenshot Methods //
-        // takeScreenshot() {
-        //     var options: Html2Canvas.Html2CanvasOptions = {
-        //         onrendered: canvas => {
-        //             this.isScreenshotMode = false;
-        //             this.showModal();
-        //             this.showSendFeedback();
-        //             this.destroyCanvas();
-        //
-        //             canvas.style.width = '100%';
-        //             canvas.style.borderRadius = '12px';
-        //
-        //             this.$timeout(() => {
-        //                 this.userFeedback.screenshotBase64 = canvas.toDataURL();
-        //             });
-        //         }
-        //     };
-        //
-        //     this.hideModal();
-        //     this.hideSendFeedback();
-        //     html2canvas(document.body, options);
-        // }
-        //
-        // resetScreenshot() {
-        //     this.userFeedback.screenshotBase64 = null;
-        // }
-        //
-        // destroyCanvas() {
-        //     this.removeDocumentEvents();
-        //
-        //     const canvas = angular.element(`#${BrooksonUiFeedbackFactory.CANVAS_ID}`);
-        //     if (canvas) canvas.remove();
-        //
-        //     const highlights = angular.element(`.${BrooksonUiFeedbackFactory.FEEDBACK_HIGHLIGHT_CLASS}`);
-        //     highlights.remove();
-        //
-        //     this.ctx = null;
-        // }
+        Factory.prototype.takeScreenshot = function () {
+            var _this = this;
+            var options = {
+                onrendered: function (canvas) {
+                    _this.isScreenshotMode = false;
+                    _this.showModal();
+                    _this.showSendFeedback();
+                    _this.destroyCanvas();
+                    canvas.style.width = '100%';
+                    canvas.style.borderRadius = '12px';
+                    _this.$timeout(function () {
+                        // this.userFeedback.screenshotBase64 = canvas.toDataURL();
+                    });
+                }
+            };
+            this.hideModal();
+            this.hideSendFeedback();
+            html2canvas(document.body, options);
+        };
+        Factory.prototype.resetScreenshot = function () {
+            // this.userFeedback.screenshotBase64 = null;
+        };
+        Factory.prototype.destroyCanvas = function () {
+            this.removeDocumentEvents();
+            var canvas = angular.element("#" + Factory.CANVAS_ID);
+            if (canvas)
+                canvas.remove();
+            var highlights = angular.element("." + Factory.FEEDBACK_HIGHLIGHT_CLASS);
+            highlights.remove();
+            this.ctx = null;
+        };
         // Document Events //
         Factory.prototype.setupDocumentEvents = function () {
             var _this = this;
@@ -217,14 +233,15 @@ var AngularBootstrapFeedback;
             canvas.width = canvas.width;
         };
         Factory.prototype.redraw = function () {
+            var _this = this;
             var highlights = angular.element("." + Factory.FEEDBACK_HIGHLIGHT_CLASS);
-            // _.forEach(highlights, highlight => {
-            //     this.ctx.clearRect(parseInt(highlight.style.left), parseInt(highlight.style.top), parseInt(highlight.style.width), parseInt(highlight.style.height));
-            //     this.ctx.strokeRect(parseInt(highlight.style.left), parseInt(highlight.style.top), parseInt(highlight.style.width), parseInt(highlight.style.height));
-            //     this.ctx.fillRect(parseInt(highlight.style.left), parseInt(highlight.style.top), parseInt(highlight.style.width), parseInt(highlight.style.height));
-            // });
+            highlights.each(function (index, highlight) {
+                _this.ctx.clearRect(parseInt(highlight.style.left), parseInt(highlight.style.top), parseInt(highlight.style.width), parseInt(highlight.style.height));
+                _this.ctx.strokeRect(parseInt(highlight.style.left), parseInt(highlight.style.top), parseInt(highlight.style.width), parseInt(highlight.style.height));
+                _this.ctx.fillRect(parseInt(highlight.style.left), parseInt(highlight.style.top), parseInt(highlight.style.width), parseInt(highlight.style.height));
+            });
         };
-        Factory.inject = ['$uibModal', '$document', '$templateCache'];
+        Factory.inject = ['$uibModal', '$document', '$templateCache', '$timeout'];
         Factory.CANVAS_ID = 'feedback-canvas';
         Factory.FEEDBACK_HIGHLIGHT_CLASS = 'feedback-highlight';
         return Factory;
@@ -242,10 +259,11 @@ var AngularBootstrapFeedback;
             this.$detection = $detection;
             // this.factory.getUserFeedbackCategories();
             // this.factory.getMemberDetails();
-            // this.factory.resetScreenshot();
+            this.factory.resetScreenshot();
             // this.factory.userFeedback.userFeedbackCategoryId = null;
             // this.factory.userFeedback = new UserFeedback();
             // this.factory.userFeedback.userFeedbackCategoryId = null;
+            this.factory.appendTransclodedContent();
         }
         // Public Methods //
         ModalController.prototype.closeModal = function () {
@@ -266,9 +284,9 @@ var AngularBootstrapFeedback;
             // if (this.$detection.isAndroid() || this.$detection.isiOS() || this.$detection.isWindowsPhone() || this.$detection.isBB10()) {
             //     this.factory.takeScreenshot();
             // } else {
-            //     this.factory.hideModal();
-            //     this.factory.isScreenshotMode = true;
-            //     this.factory.createCanvas();
+            this.factory.hideModal();
+            this.factory.isScreenshotMode = true;
+            this.factory.createCanvas();
             // }
         };
         return ModalController;

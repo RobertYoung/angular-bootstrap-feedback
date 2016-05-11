@@ -4,6 +4,7 @@
 module AngularBootstrapFeedback {
     export interface IFactory {
         isScreenshotMode: boolean;
+        transcludedContent: any;
         // $uibModalInstance: ng.ui.bootstrap.IModalServiceInstance,
 
         // Selectors
@@ -15,6 +16,7 @@ module AngularBootstrapFeedback {
         hideModal();
         showModal();
         closeModal();
+        appendTransclodedContent();
 
         // Document Events
         setupDocumentEvents();
@@ -25,18 +27,19 @@ module AngularBootstrapFeedback {
         // getUrl();
 
         // // Screenshot Methods //
-        // takeScreenshot();
-        // resetScreenshot();
-        // destroyCanvas();
-        // addAlphaBackground();
+        takeScreenshot();
+        resetScreenshot();
+        destroyCanvas();
+        addAlphaBackground();
         //
-        // // Canvas Methods //
-        // createCanvas();
+
+        // Canvas Methods //
+        createCanvas();
     }
 
 
     export class Factory {
-        static inject = ['$uibModal', '$document', '$templateCache'];
+        static inject = ['$uibModal', '$document', '$templateCache', '$timeout'];
         static CANVAS_ID: string = 'feedback-canvas';
         static FEEDBACK_HIGHLIGHT_CLASS: string = 'feedback-highlight';
 
@@ -48,6 +51,7 @@ module AngularBootstrapFeedback {
         private modalElementSelector: string = 'div[uib-modal-window]';
         private modalBackdropElementSelector: string = 'div[uib-modal-backdrop]';
         private sendFeedbackElementSelector: string = 'div.send-feedback';
+        private modalBodyElementSelector: string = `${this.modalElementSelector} .modal-body`;
 
         // Canvas Methods //
         private ctx;
@@ -55,7 +59,11 @@ module AngularBootstrapFeedback {
         private centerX: number;
         private centerY: number;
 
-        constructor(private $uibModal: ng.ui.bootstrap.IModalService, private $document: ng.IDocumentService, private $templateCache: ng.ITemplateCacheService) { }
+        // Transclude
+        private transcludedContent: any;
+
+        constructor(private $uibModal: ng.ui.bootstrap.IModalService, private $document: ng.IDocumentService, private $templateCache: ng.ITemplateCacheService,
+        private $timeout: ng.ITimeoutService) { }
 
         // Send Feedback Methods //
         hideSendFeedback() {
@@ -97,8 +105,17 @@ module AngularBootstrapFeedback {
 
         closeModal() {
             this.$uibModalInstance.close();
-            // this.destroyCanvas();
+            this.destroyCanvas();
         }
+
+        appendTransclodedContent() {
+          this.$timeout(() => {
+            const element = angular.element(this.modalBodyElementSelector);
+            element.append(this.transcludedContent);
+          });
+
+        }
+
         // User Information //
         getUserAgentInfo() {
             // const browser: UAParser.IBrowser = this.uaParser.getBrowser();
@@ -129,43 +146,43 @@ module AngularBootstrapFeedback {
         // }
 
         // Screenshot Methods //
-        // takeScreenshot() {
-        //     var options: Html2Canvas.Html2CanvasOptions = {
-        //         onrendered: canvas => {
-        //             this.isScreenshotMode = false;
-        //             this.showModal();
-        //             this.showSendFeedback();
-        //             this.destroyCanvas();
-        //
-        //             canvas.style.width = '100%';
-        //             canvas.style.borderRadius = '12px';
-        //
-        //             this.$timeout(() => {
-        //                 this.userFeedback.screenshotBase64 = canvas.toDataURL();
-        //             });
-        //         }
-        //     };
-        //
-        //     this.hideModal();
-        //     this.hideSendFeedback();
-        //     html2canvas(document.body, options);
-        // }
-        //
-        // resetScreenshot() {
-        //     this.userFeedback.screenshotBase64 = null;
-        // }
-        //
-        // destroyCanvas() {
-        //     this.removeDocumentEvents();
-        //
-        //     const canvas = angular.element(`#${BrooksonUiFeedbackFactory.CANVAS_ID}`);
-        //     if (canvas) canvas.remove();
-        //
-        //     const highlights = angular.element(`.${BrooksonUiFeedbackFactory.FEEDBACK_HIGHLIGHT_CLASS}`);
-        //     highlights.remove();
-        //
-        //     this.ctx = null;
-        // }
+        takeScreenshot() {
+            var options: Html2Canvas.Html2CanvasOptions = {
+                onrendered: canvas => {
+                    this.isScreenshotMode = false;
+                    this.showModal();
+                    this.showSendFeedback();
+                    this.destroyCanvas();
+
+                    canvas.style.width = '100%';
+                    canvas.style.borderRadius = '12px';
+
+                    this.$timeout(() => {
+                        // this.userFeedback.screenshotBase64 = canvas.toDataURL();
+                    });
+                }
+            };
+
+            this.hideModal();
+            this.hideSendFeedback();
+            html2canvas(document.body, options);
+        }
+
+        resetScreenshot() {
+            // this.userFeedback.screenshotBase64 = null;
+        }
+
+        destroyCanvas() {
+            this.removeDocumentEvents();
+
+            const canvas = angular.element(`#${Factory.CANVAS_ID}`);
+            if (canvas) canvas.remove();
+
+            const highlights = angular.element(`.${Factory.FEEDBACK_HIGHLIGHT_CLASS}`);
+            highlights.remove();
+
+            this.ctx = null;
+        }
 
         // Document Events //
         setupDocumentEvents() {
@@ -258,11 +275,11 @@ module AngularBootstrapFeedback {
         private redraw() {
             const highlights = angular.element(`.${Factory.FEEDBACK_HIGHLIGHT_CLASS}`);
 
-            // _.forEach(highlights, highlight => {
-            //     this.ctx.clearRect(parseInt(highlight.style.left), parseInt(highlight.style.top), parseInt(highlight.style.width), parseInt(highlight.style.height));
-            //     this.ctx.strokeRect(parseInt(highlight.style.left), parseInt(highlight.style.top), parseInt(highlight.style.width), parseInt(highlight.style.height));
-            //     this.ctx.fillRect(parseInt(highlight.style.left), parseInt(highlight.style.top), parseInt(highlight.style.width), parseInt(highlight.style.height));
-            // });
+            highlights.each((index, highlight: any) => {
+                this.ctx.clearRect(parseInt(highlight.style.left), parseInt(highlight.style.top), parseInt(highlight.style.width), parseInt(highlight.style.height));
+                this.ctx.strokeRect(parseInt(highlight.style.left), parseInt(highlight.style.top), parseInt(highlight.style.width), parseInt(highlight.style.height));
+                this.ctx.fillRect(parseInt(highlight.style.left), parseInt(highlight.style.top), parseInt(highlight.style.width), parseInt(highlight.style.height));
+            });
         }
     }
 }

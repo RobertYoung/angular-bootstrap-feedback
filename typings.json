@@ -2,6 +2,7 @@
   "ambientDependencies": {
     "angular": "registry:dt/angular#1.5.0+20160509150441",
     "bootstrap": "registry:dt/bootstrap#3.3.5+20160316155526",
+    "html2canvas": "registry:dt/html2canvas#0.0.0+20160414141641",
     "jquery": "registry:dt/jquery#1.10.0+20160417213236"
   }
 }

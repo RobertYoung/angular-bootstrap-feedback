@@ -7,10 +7,12 @@ module AngularBootstrapFeedback {
         constructor(private factory: IFactory, private $detection : any) {
             // this.factory.getUserFeedbackCategories();
             // this.factory.getMemberDetails();
-            // this.factory.resetScreenshot();
+            this.factory.resetScreenshot();
             // this.factory.userFeedback.userFeedbackCategoryId = null;
             // this.factory.userFeedback = new UserFeedback();
             // this.factory.userFeedback.userFeedbackCategoryId = null;
+
+            this.factory.appendTransclodedContent();
         }
 
         // Public Methods //
@@ -34,9 +36,9 @@ module AngularBootstrapFeedback {
             // if (this.$detection.isAndroid() || this.$detection.isiOS() || this.$detection.isWindowsPhone() || this.$detection.isBB10()) {
             //     this.factory.takeScreenshot();
             // } else {
-            //     this.factory.hideModal();
-            //     this.factory.isScreenshotMode = true;
-            //     this.factory.createCanvas();
+                this.factory.hideModal();
+                this.factory.isScreenshotMode = true;
+                this.factory.createCanvas();
             // }
         }
     }

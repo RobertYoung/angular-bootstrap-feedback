@@ -1,0 +1,40 @@
+/** FEEDBACK */
+@keyframes slide {
+    100% { bottom: 0; }
+}
+
+.send-feedback {
+    -webkit-animation: slide 0.9s forwards;
+    -moz-animation: slide 0.9s forwards;
+    -ms-animation: slide 0.9s forwards;
+    -o-animation: slide 0.9s forwards;
+    animation: slide 0.9s forwards;
+    bottom: -40px;
+    right: 56px;
+    background-color: #2d85be;
+    color: #eee;
+    position: fixed;
+    padding: 3px;
+    padding: 5px 12px 5px 13px;
+    -webkit-border-top-left-radius: 10px;
+    -webkit-border-top-right-radius: 10px;
+    -moz-border-radius-topleft: 10px;
+    -moz-border-radius-topright: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border: 4px solid #333333;
+    border-bottom: 0;
+    font-size: 18px;
+    text-align: center;
+    z-index: 100;
+}
+
+.feedback-screenshot img{
+    width: 100%;
+    min-height: 230px;
+    border: 5px solid #eee;
+    border-radius: 12px;
+}
+#feedback-canvas {
+    cursor: crosshair;
+}

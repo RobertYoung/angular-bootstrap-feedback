@@ -1,0 +1,23 @@
+﻿<div class="send-feedback clickable">
+    <!--- SEND FEEDBACK -->
+    <div ng-if="!$ctrl.factory.isScreenshotMode" ng-click="$ctrl.openModal()">
+        Send Feedback
+        <i class="fa fa-comment" aria-hidden="true"></i>
+    </div>
+    <!--- /SEND FEEDBACK -->
+    <!-- SCREENSHOT OPTIONS -->
+    <div ng-if="$ctrl.factory.isScreenshotMode">
+        <span>Options</span>
+        <div class="row">
+            <div class="col-xs-12">
+                <button class="btn btn-danger col-xs-12" ng-click="$ctrl.cancelScreenshotPressed()">Cancel</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <button class="btn btn-success col-xs-12" ng-click="$ctrl.takeScreenshotPressed()">Take Screenshot</button>
+            </div>
+        </div>
+    </div>
+    <!-- /SCREENSHOT OPTIONS -->
+</div>

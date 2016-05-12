@@ -9,7 +9,9 @@ module AngularBootstrapFeedback {
 
         screenshotBase64: string;
 
+        // Options
         setOptions(options: IOptions);
+        options: IOptions;
 
         // Selectors
         modalElementSelector: string;
@@ -128,6 +130,7 @@ module AngularBootstrapFeedback {
         // Options
         setOptions(options: IOptions) {
           options = options || <IOptions>{};
+          this.options = options;
           this.options.takeScreenshotButtonText = options.takeScreenshotButtonText ? options.takeScreenshotButtonText : 'Take Screenshot';
           this.options.submitButtonText = options.submitButtonText ? options.submitButtonText : 'Submit';
           this.options.sendFeedbackButtonText = options.sendFeedbackButtonText ? options.sendFeedbackButtonText : 'Send Feedback';

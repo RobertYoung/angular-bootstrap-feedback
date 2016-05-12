@@ -16,6 +16,7 @@ module AngularBootstrapFeedback {
         constructor(private factory: IFactory) {}
 
         takeScreenshotButtonPressed() {
+          if (this.factory.options.takeScreenshotButtonPressed) this.factory.options.takeScreenshotButtonPressed();
             // If mobile, take screenshot only
             // if (this.$detection.isAndroid() || this.$detection.isiOS() || this.$detection.isWindowsPhone() || this.$detection.isBB10()) {
             //     this.factory.takeScreenshot();

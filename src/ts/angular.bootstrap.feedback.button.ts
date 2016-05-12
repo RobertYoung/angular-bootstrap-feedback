@@ -32,16 +32,22 @@ module AngularBootstrapFeedback {
         }
 
         openModal() {
-            this.factory.openModal();
+          if (this.options.sendFeedbackButtonPressed) this.options.sendFeedbackButtonPressed();
+
+          this.factory.openModal();
         }
 
         cancelScreenshotPressed() {
+            if (this.factory.options.cancelScreenshotOptionsButtonPressed) this.factory.options.cancelScreenshotOptionsButtonPressed();
+
             this.factory.isScreenshotMode = false;
             this.factory.showModal();
             this.factory.destroyCanvas();
         }
 
         takeScreenshotPressed() {
+          if (this.factory.options.takeScreenshotOptionsButtonPressed) this.factory.options.takeScreenshotOptionsButtonPressed();
+
             this.factory.takeScreenshot();
         }
     }

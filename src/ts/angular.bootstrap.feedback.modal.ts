@@ -21,9 +21,10 @@ module AngularBootstrapFeedback {
         }
 
         submitButtonPressed(form: ng.IFormController) {
-            if (form.$invalid) {
-                return;
-            }
+          if (this.factory.options.submitButtonPressed) this.factory.options.submitButtonPressed(form);
+            // if (form.$invalid) {
+            //     return;
+            // }
             //
             // this.factory.getUserAgentInfo();
             // this.factory.getState();

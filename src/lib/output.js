@@ -31,14 +31,20 @@ var AngularBootstrapFeedback;
             this.factory.setOptions(this.options);
         };
         ButtonController.prototype.openModal = function () {
+            if (this.options.sendFeedbackButtonPressed)
+                this.options.sendFeedbackButtonPressed();
             this.factory.openModal();
         };
         ButtonController.prototype.cancelScreenshotPressed = function () {
+            if (this.factory.options.cancelScreenshotOptionsButtonPressed)
+                this.factory.options.cancelScreenshotOptionsButtonPressed();
             this.factory.isScreenshotMode = false;
             this.factory.showModal();
             this.factory.destroyCanvas();
         };
         ButtonController.prototype.takeScreenshotPressed = function () {
+            if (this.factory.options.takeScreenshotOptionsButtonPressed)
+                this.factory.options.takeScreenshotOptionsButtonPressed();
             this.factory.takeScreenshot();
         };
         return ButtonController;
@@ -141,6 +147,7 @@ var AngularBootstrapFeedback;
         // Options
         Factory.prototype.setOptions = function (options) {
             options = options || {};
+            this.options = options;
             this.options.takeScreenshotButtonText = options.takeScreenshotButtonText ? options.takeScreenshotButtonText : 'Take Screenshot';
             this.options.submitButtonText = options.submitButtonText ? options.submitButtonText : 'Submit';
             this.options.sendFeedbackButtonText = options.sendFeedbackButtonText ? options.sendFeedbackButtonText : 'Send Feedback';
@@ -288,9 +295,11 @@ var AngularBootstrapFeedback;
             this.factory.closeModal();
         };
         ModalController.prototype.submitButtonPressed = function (form) {
-            if (form.$invalid) {
-                return;
-            }
+            if (this.factory.options.submitButtonPressed)
+                this.factory.options.submitButtonPressed(form);
+            // if (form.$invalid) {
+            //     return;
+            // }
             //
             // this.factory.getUserAgentInfo();
             // this.factory.getState();
@@ -302,6 +311,7 @@ var AngularBootstrapFeedback;
     AngularBootstrapFeedback.ModalController = ModalController;
 })(AngularBootstrapFeedback || (AngularBootstrapFeedback = {}));
 /// <reference path="../../typings/main.d.ts"/>
+/// <reference path="./angular.bootstrap.feedback.ts"/>
 /// <reference path="../../typings/main.d.ts"/>
 /// <reference path="./angular.bootstrap.feedback.ts"/>
 var AngularBootstrapFeedback;
@@ -319,6 +329,8 @@ var AngularBootstrapFeedback;
             this.factory = factory;
         }
         ScreenshotController.prototype.takeScreenshotButtonPressed = function () {
+            if (this.factory.options.takeScreenshotButtonPressed)
+                this.factory.options.takeScreenshotButtonPressed();
             // If mobile, take screenshot only
             // if (this.$detection.isAndroid() || this.$detection.isiOS() || this.$detection.isWindowsPhone() || this.$detection.isBB10()) {
             //     this.factory.takeScreenshot();

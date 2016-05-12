@@ -9,6 +9,8 @@ module AngularBootstrapFeedback {
 
         screenshotBase64: string;
 
+        setOptions(options: IOptions);
+
         // Selectors
         modalElementSelector: string;
         modalBackdropElementSelector: string;
@@ -50,6 +52,9 @@ module AngularBootstrapFeedback {
         $uibModalInstance: ng.ui.bootstrap.IModalServiceInstance;
 
         screenshotBase64: string;
+
+        // Options
+        private options: IOptions = <IOptions>{};
 
         // HTML Selectors //
         private modalElementSelector: string = 'div[uib-modal-window]';
@@ -118,6 +123,16 @@ module AngularBootstrapFeedback {
             element.append(this.transcludedContent);
           });
 
+        }
+
+        // Options
+        setOptions(options: IOptions) {
+          options = options || <IOptions>{};
+          this.options.takeScreenshotButtonText = options.takeScreenshotButtonText ? options.takeScreenshotButtonText : 'Take Screenshot';
+          this.options.submitButtonText = options.submitButtonText ? options.submitButtonText : 'Submit';
+          this.options.sendFeedbackButtonText = options.sendFeedbackButtonText ? options.sendFeedbackButtonText : 'Send Feedback';
+          this.options.cancelScreenshotOptionsButtonText = options.cancelScreenshotOptionsButtonText ? options.cancelScreenshotOptionsButtonText : 'Cancel';
+          this.options.takeScreenshotOptionsButtonText = options.takeScreenshotOptionsButtonText ? options.takeScreenshotOptionsButtonText : 'Take Screenshot';
         }
 
         // User Information //

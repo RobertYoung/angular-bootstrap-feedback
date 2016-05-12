@@ -7,19 +7,28 @@ module AngularBootstrapFeedback {
         public controller: any;
         public template: any;
         public transclude: boolean = true;
+        public bindings: any;
 
         constructor() {
-            this.controller = ['angularBootstrapFeedbackFactory', '$transclude', ButtonController];
-            this.template = ['$templateCache', ($templateCache: ng.ITemplateCacheService): Object => $templateCache.get('angular.bootstrap.feedback.button.html')];
+          this.bindings = {
+            options: '=?'
+          };
+          this.controller = ['angularBootstrapFeedbackFactory', '$transclude', ButtonController];
+          this.template = ['$templateCache', ($templateCache: ng.ITemplateCacheService): Object => $templateCache.get('angular.bootstrap.feedback.button.html')];
         }
     }
 
     class ButtonController {
+        options: IOptions;
 
-        constructor(private factory: IFactory, private transclude: ng.ITranscludeFunction) {
+        constructor(private factory: IFactory, private transclude: ng.ITranscludeFunction) {}
+
+        $onInit() {
           this.transclude((value) => {
             this.factory.transcludedContent = value;
           })
+
+          this.factory.setOptions(this.options);
         }
 
         openModal() {

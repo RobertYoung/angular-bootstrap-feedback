@@ -9,6 +9,9 @@ var AngularBootstrapFeedback;
     var Button = (function () {
         function Button() {
             this.transclude = true;
+            this.bindings = {
+                options: '=?'
+            };
             this.controller = ['angularBootstrapFeedbackFactory', '$transclude', ButtonController];
             this.template = ['$templateCache', function ($templateCache) { return $templateCache.get('angular.bootstrap.feedback.button.html'); }];
         }
@@ -17,13 +20,16 @@ var AngularBootstrapFeedback;
     AngularBootstrapFeedback.Button = Button;
     var ButtonController = (function () {
         function ButtonController(factory, transclude) {
-            var _this = this;
             this.factory = factory;
             this.transclude = transclude;
+        }
+        ButtonController.prototype.$onInit = function () {
+            var _this = this;
             this.transclude(function (value) {
                 _this.factory.transcludedContent = value;
             });
-        }
+            this.factory.setOptions(this.options);
+        };
         ButtonController.prototype.openModal = function () {
             this.factory.openModal();
         };
@@ -52,6 +58,8 @@ var AngularBootstrapFeedback;
             this.$document = $document;
             this.$templateCache = $templateCache;
             this.$timeout = $timeout;
+            // Options
+            this.options = {};
             // HTML Selectors //
             this.modalElementSelector = 'div[uib-modal-window]';
             this.modalBackdropElementSelector = 'div[uib-modal-backdrop]';
@@ -129,6 +137,15 @@ var AngularBootstrapFeedback;
                 var element = angular.element(_this.modalBodyElementSelector);
                 element.append(_this.transcludedContent);
             });
+        };
+        // Options
+        Factory.prototype.setOptions = function (options) {
+            options = options || {};
+            this.options.takeScreenshotButtonText = options.takeScreenshotButtonText ? options.takeScreenshotButtonText : 'Take Screenshot';
+            this.options.submitButtonText = options.submitButtonText ? options.submitButtonText : 'Submit';
+            this.options.sendFeedbackButtonText = options.sendFeedbackButtonText ? options.sendFeedbackButtonText : 'Send Feedback';
+            this.options.cancelScreenshotOptionsButtonText = options.cancelScreenshotOptionsButtonText ? options.cancelScreenshotOptionsButtonText : 'Cancel';
+            this.options.takeScreenshotOptionsButtonText = options.takeScreenshotOptionsButtonText ? options.takeScreenshotOptionsButtonText : 'Take Screenshot';
         };
         // User Information //
         Factory.prototype.getUserAgentInfo = function () {
@@ -284,6 +301,7 @@ var AngularBootstrapFeedback;
     }());
     AngularBootstrapFeedback.ModalController = ModalController;
 })(AngularBootstrapFeedback || (AngularBootstrapFeedback = {}));
+/// <reference path="../../typings/main.d.ts"/>
 /// <reference path="../../typings/main.d.ts"/>
 /// <reference path="./angular.bootstrap.feedback.ts"/>
 var AngularBootstrapFeedback;

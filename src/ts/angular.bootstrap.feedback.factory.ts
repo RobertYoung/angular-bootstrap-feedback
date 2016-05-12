@@ -7,6 +7,8 @@ module AngularBootstrapFeedback {
         transcludedContent: any;
         // $uibModalInstance: ng.ui.bootstrap.IModalServiceInstance,
 
+        screenshotBase64: string;
+
         // Selectors
         modalElementSelector: string;
         modalBackdropElementSelector: string;
@@ -46,6 +48,8 @@ module AngularBootstrapFeedback {
         // Screenshot data //
         isScreenshotMode: boolean;
         $uibModalInstance: ng.ui.bootstrap.IModalServiceInstance;
+
+        screenshotBase64: string;
 
         // HTML Selectors //
         private modalElementSelector: string = 'div[uib-modal-window]';
@@ -158,18 +162,19 @@ module AngularBootstrapFeedback {
                     canvas.style.borderRadius = '12px';
 
                     this.$timeout(() => {
-                        // this.userFeedback.screenshotBase64 = canvas.toDataURL();
+                        this.screenshotBase64 = canvas.toDataURL();
                     });
                 }
             };
 
             this.hideModal();
             this.hideSendFeedback();
+
             html2canvas(document.body, options);
         }
 
         resetScreenshot() {
-            // this.userFeedback.screenshotBase64 = null;
+            this.screenshotBase64 = null;
         }
 
         destroyCanvas() {

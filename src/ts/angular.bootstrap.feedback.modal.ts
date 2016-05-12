@@ -30,16 +30,5 @@ module AngularBootstrapFeedback {
             // this.factory.getUrl();
             // this.factory.postUserFeedback();
         }
-
-        takeScreenshotButtonPressed() {
-            // If mobile, take screenshot only
-            // if (this.$detection.isAndroid() || this.$detection.isiOS() || this.$detection.isWindowsPhone() || this.$detection.isBB10()) {
-            //     this.factory.takeScreenshot();
-            // } else {
-                this.factory.hideModal();
-                this.factory.isScreenshotMode = true;
-                this.factory.createCanvas();
-            // }
-        }
     }
 }

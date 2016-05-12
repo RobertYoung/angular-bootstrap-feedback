@@ -169,7 +169,7 @@ var AngularBootstrapFeedback;
                     canvas.style.width = '100%';
                     canvas.style.borderRadius = '12px';
                     _this.$timeout(function () {
-                        // this.userFeedback.screenshotBase64 = canvas.toDataURL();
+                        _this.screenshotBase64 = canvas.toDataURL();
                     });
                 }
             };
@@ -178,7 +178,7 @@ var AngularBootstrapFeedback;
             html2canvas(document.body, options);
         };
         Factory.prototype.resetScreenshot = function () {
-            // this.userFeedback.screenshotBase64 = null;
+            this.screenshotBase64 = null;
         };
         Factory.prototype.destroyCanvas = function () {
             this.removeDocumentEvents();
@@ -279,7 +279,27 @@ var AngularBootstrapFeedback;
             // this.factory.getUrl();
             // this.factory.postUserFeedback();
         };
-        ModalController.prototype.takeScreenshotButtonPressed = function () {
+        return ModalController;
+    }());
+    AngularBootstrapFeedback.ModalController = ModalController;
+})(AngularBootstrapFeedback || (AngularBootstrapFeedback = {}));
+/// <reference path="../../typings/main.d.ts"/>
+/// <reference path="./angular.bootstrap.feedback.ts"/>
+var AngularBootstrapFeedback;
+(function (AngularBootstrapFeedback) {
+    var Screenshot = (function () {
+        function Screenshot() {
+            this.controller = ['angularBootstrapFeedbackFactory', ScreenshotController];
+            this.template = ['$templateCache', function ($templateCache) { return $templateCache.get('angular.bootstrap.feedback.screenshot.html'); }];
+        }
+        return Screenshot;
+    }());
+    AngularBootstrapFeedback.Screenshot = Screenshot;
+    var ScreenshotController = (function () {
+        function ScreenshotController(factory) {
+            this.factory = factory;
+        }
+        ScreenshotController.prototype.takeScreenshotButtonPressed = function () {
             // If mobile, take screenshot only
             // if (this.$detection.isAndroid() || this.$detection.isiOS() || this.$detection.isWindowsPhone() || this.$detection.isBB10()) {
             //     this.factory.takeScreenshot();
@@ -289,7 +309,9 @@ var AngularBootstrapFeedback;
             this.factory.createCanvas();
             // }
         };
-        return ModalController;
+        return ScreenshotController;
     }());
-    AngularBootstrapFeedback.ModalController = ModalController;
 })(AngularBootstrapFeedback || (AngularBootstrapFeedback = {}));
+angular
+    .module('angular.bootstrap.feedback')
+    .component('angularBootstrapFeedbackScreenshot', new AngularBootstrapFeedback.Screenshot());

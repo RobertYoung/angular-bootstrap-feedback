@@ -78,15 +78,7 @@
               </div>
 
               <div class="col-lg-6">
-                  <div class="feedback-screenshot">
-                      <img ng-src="{{$ctrl.factory.userFeedback.screenshotBase64}}" />
-                  </div>
-                  <div class="btn-toolbar">
-                      <button class="btn btn-default" type="button" ng-click="$ctrl.takeScreenshotButtonPressed()">
-                          <i class="fa fa-camera" aria-hidden="true"></i>
-                          Take Screenshot
-                      </button>
-                  </div>
+                  <angular-bootstrap-feedback-screenshot></angular-bootstrap-feedback-screenshot>
               </div>
           </div>
         </angular-bootstrap-feedback>

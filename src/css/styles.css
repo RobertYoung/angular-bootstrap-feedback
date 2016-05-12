@@ -26,15 +26,18 @@
     border-bottom: 0;
     font-size: 18px;
     text-align: center;
-    z-index: 100;
+    z-index: 9001;
 }
 
-.feedback-screenshot img{
+.feedback-screenshot img {
     width: 100%;
     min-height: 230px;
     border: 5px solid #eee;
     border-radius: 12px;
+    object-fit: cover;
 }
 #feedback-canvas {
     cursor: crosshair;
+    z-index: 9000;
+position: absolute;
 }

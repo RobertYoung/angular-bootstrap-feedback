@@ -220,7 +220,8 @@ var AngularBootstrapFeedback;
                 body.append(canvas);
                 angular.element("#" + Factory.CANVAS_ID).attr({
                     'width': this.$document.width(),
-                    'height': this.$document.height()
+                    'height': this.$document.height(),
+                    'style': 'top: 0'
                 });
                 var canvasElement = document.getElementById(Factory.CANVAS_ID);
                 this.ctx = canvasElement.getContext('2d');

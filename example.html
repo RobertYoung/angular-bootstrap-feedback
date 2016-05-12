@@ -42,6 +42,33 @@
     </nav>
 
     <div class="container">
+      <!-- Jumbotron -->
+      <div class="jumbotron">
+        <h1>Marketing stuff!</h1>
+        <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet.</p>
+        <p><a class="btn btn-lg btn-success" href="#" role="button">Get started today</a></p>
+      </div>
+
+      <!-- Example row of columns -->
+      <!-- <div class="row">
+        <div class="col-lg-4">
+          <h2>Safari bug warning!</h2>
+          <p class="text-danger">As of v8.0, Safari exhibits a bug in which resizing your browser horizontally causes rendering errors in the justified nav that are cleared upon refreshing.</p>
+          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+          <p><a class="btn btn-primary" href="#" role="button">View details &raquo;</a></p>
+        </div>
+        <div class="col-lg-4">
+          <h2>Heading</h2>
+          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+          <p><a class="btn btn-primary" href="#" role="button">View details &raquo;</a></p>
+       </div>
+        <div class="col-lg-4">
+          <h2>Heading</h2>
+          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa.</p>
+          <p><a class="btn btn-primary" href="#" role="button">View details &raquo;</a></p>
+        </div>
+      </div> -->
+
         <angular-bootstrap-feedback>
           <div class="row">
               <div class="col-xs-12">
@@ -52,27 +79,16 @@
           </div>
           <div class="row">
               <div class="col-lg-6">
-                  <!-- FEEDBACK TYPE -->
-                  <div class="form-group">
-                      <label for="userFeedbackCategory_field" class="control-label">Feedback type:</label>
-                      <brookson-input-check-buttons field="userFeedbackCategory" label="Feedback type"
-                                                    ng-model="$ctrl.factory.userFeedback.userFeedbackCategoryId" is-required="true"
-                                                    buttons="$ctrl.factory.userFeedbackCategories"></brookson-input-check-buttons>
-                  </div>
-                  <!-- /FEEDBACK TYPE -->
                   <!-- DESCRIPTION -->
                   <div class="form-group">
                       <label for="description_field" class="control-label">Comment:</label>
-                      <brookson-input-textarea field="description" label="Comment"
-                                               ng-model="$ctrl.factory.userFeedback.description" is-required="true" ng-maxlength="250"
-                                               textbox-style="{'min-height': '80px'}"></brookson-input-textarea>
+                      <textarea class="form-control" placeholder="Comment" style="min-height: 165px;"></textarea>
                   </div>
                   <!-- /DESCRIPTION -->
                   <!-- EMAIL -->
                   <div class="form-group">
                       <label for="email_field" class="control-label">Email:</label>
-                      <brookson-input-email field="email" label="Email" placeholder="Email" ng-model="$ctrl.factory.userFeedback.email"
-                                            is-required="true" ng-maxlength="200"></brookson-input-email>
+                      <input type="text" class="form-control" placeholder="Email"/>
                   </div>
                   <!-- /EMAIL -->
               </div>

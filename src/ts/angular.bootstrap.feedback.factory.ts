@@ -187,7 +187,7 @@ module AngularBootstrapFeedback {
 
                     this.$timeout(() => {
                         this.screenshotBase64 = canvas.toDataURL();
-                        if (this.options.screenshotTaken) this.options.screenshotTaken(this.screenshotBase64);
+                        if (this.options.screenshotTaken) this.options.screenshotTaken(this.screenshotBase64, canvas);
                     });
                 }
             };
@@ -271,6 +271,8 @@ module AngularBootstrapFeedback {
             angular.element('body').append(highlight);
 
             this.redraw();
+
+            if (this.options.highlightDrawn) this.options.highlightDrawn(angular.element(highlight));
         }
 
         addAlphaBackground() {

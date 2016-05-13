@@ -99,6 +99,8 @@ var AngularBootstrapFeedback;
                 var highlight = '<div class="feedback-highlight" style="position:absolute;top:' + _this.centerY + 'px;left:' + _this.centerX + 'px;width:' + width + 'px;height:' + height + 'px;z-index:30000;"></div>';
                 angular.element('body').append(highlight);
                 _this.redraw();
+                if (_this.options.highlightDrawn)
+                    _this.options.highlightDrawn(angular.element(highlight));
             };
         }
         // Send Feedback Methods //
@@ -203,7 +205,7 @@ var AngularBootstrapFeedback;
                     _this.$timeout(function () {
                         _this.screenshotBase64 = canvas.toDataURL();
                         if (_this.options.screenshotTaken)
-                            _this.options.screenshotTaken(_this.screenshotBase64);
+                            _this.options.screenshotTaken(_this.screenshotBase64, canvas);
                     });
                 }
             };

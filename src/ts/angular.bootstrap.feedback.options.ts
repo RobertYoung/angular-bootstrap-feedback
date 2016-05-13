@@ -18,7 +18,8 @@ module AngularBootstrapFeedback {
     takeScreenshotOptionsButtonPressed();
 
     // Screenshot Events
-    screenshotTaken(image: string);
+    screenshotTaken(image: string, canvas: HTMLCanvasElement);
+    highlightDrawn(element: ng.IAugmentedJQuery);
 
     // Modal Events
     modalDismissed();

@@ -24,15 +24,15 @@ module AngularBootstrapFeedback {
         constructor(private factory: IFactory, private transclude: ng.ITranscludeFunction) {}
 
         $onInit() {
-          this.transclude((value) => {
-            this.factory.transcludedContent = value;
-          })
-
           this.factory.setOptions(this.options);
         }
 
         openModal() {
           if (this.options.sendFeedbackButtonPressed) this.options.sendFeedbackButtonPressed();
+
+          this.transclude((value) => {
+            this.factory.transcludedContent = value;
+          });
 
           this.factory.openModal();
         }
@@ -47,8 +47,7 @@ module AngularBootstrapFeedback {
 
         takeScreenshotPressed() {
           if (this.factory.options.takeScreenshotOptionsButtonPressed) this.factory.options.takeScreenshotOptionsButtonPressed();
-
-            this.factory.takeScreenshot();
+          this.factory.takeScreenshot();
         }
     }
 }

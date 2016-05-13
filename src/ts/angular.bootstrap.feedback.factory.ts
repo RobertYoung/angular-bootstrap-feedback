@@ -98,6 +98,11 @@ module AngularBootstrapFeedback {
             }
 
             this.$uibModalInstance = this.$uibModal.open(modalSettings);
+            this.$uibModalInstance.result.then(() => {
+
+            }, () => {
+              if (this.options.modalDismissed) this.options.modalDismissed();
+            });
         }
 
         hideModal() {
@@ -117,6 +122,8 @@ module AngularBootstrapFeedback {
         closeModal() {
             this.$uibModalInstance.close();
             this.destroyCanvas();
+
+            if (this.options.modalDismissed) this.options.modalDismissed();
         }
 
         appendTransclodedContent() {
@@ -124,7 +131,6 @@ module AngularBootstrapFeedback {
             const element = angular.element(this.modalBodyElementSelector);
             element.append(this.transcludedContent);
           });
-
         }
 
         // Options
@@ -181,6 +187,7 @@ module AngularBootstrapFeedback {
 
                     this.$timeout(() => {
                         this.screenshotBase64 = canvas.toDataURL();
+                        if (this.options.screenshotTaken) this.options.screenshotTaken(this.screenshotBase64);
                     });
                 }
             };

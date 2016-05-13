@@ -127,7 +127,9 @@
                   submitButtonPressed: submitButtonPressed,
                   sendFeedbackButtonPressed: sendFeedbackButtonPressed,
                   cancelScreenshotOptionsButtonPressed: cancelScreenshotOptionsButtonPressed,
-                  takeScreenshotOptionsButtonPressed: takeScreenshotOptionsButtonPressed
+                  takeScreenshotOptionsButtonPressed: takeScreenshotOptionsButtonPressed,
+                  screenshotTaken: screenshotTaken,
+                  modalDismissed: modalDismissed
                 }
 
                 function takeScreenshotButtonPressed() {
@@ -148,6 +150,14 @@
 
                 function takeScreenshotOptionsButtonPressed() {
                   console.log("Take screenshot options button pressed");
+                }
+
+                function screenshotTaken(image) {
+                  console.log("Screenshot taken: " + image.length);
+                }
+
+                function modalDismissed() {
+                  console.log("Modal dismissed");
                 }
             }]);
           })();

@@ -24,15 +24,15 @@ var AngularBootstrapFeedback;
             this.transclude = transclude;
         }
         ButtonController.prototype.$onInit = function () {
-            var _this = this;
-            this.transclude(function (value) {
-                _this.factory.transcludedContent = value;
-            });
             this.factory.setOptions(this.options);
         };
         ButtonController.prototype.openModal = function () {
+            var _this = this;
             if (this.options.sendFeedbackButtonPressed)
                 this.options.sendFeedbackButtonPressed();
+            this.transclude(function (value) {
+                _this.factory.transcludedContent = value;
+            });
             this.factory.openModal();
         };
         ButtonController.prototype.cancelScreenshotPressed = function () {
@@ -112,6 +112,7 @@ var AngularBootstrapFeedback;
         };
         // Modal Methods //
         Factory.prototype.openModal = function () {
+            var _this = this;
             var modalSettings = {
                 animation: true,
                 size: "lg",
@@ -120,6 +121,11 @@ var AngularBootstrapFeedback;
                 controllerAs: '$ctrl'
             };
             this.$uibModalInstance = this.$uibModal.open(modalSettings);
+            this.$uibModalInstance.result.then(function () {
+            }, function () {
+                if (_this.options.modalDismissed)
+                    _this.options.modalDismissed();
+            });
         };
         Factory.prototype.hideModal = function () {
             var modal = angular.element(this.modalElementSelector);
@@ -136,6 +142,8 @@ var AngularBootstrapFeedback;
         Factory.prototype.closeModal = function () {
             this.$uibModalInstance.close();
             this.destroyCanvas();
+            if (this.options.modalDismissed)
+                this.options.modalDismissed();
         };
         Factory.prototype.appendTransclodedContent = function () {
             var _this = this;
@@ -194,6 +202,8 @@ var AngularBootstrapFeedback;
                     canvas.style.borderRadius = '12px';
                     _this.$timeout(function () {
                         _this.screenshotBase64 = canvas.toDataURL();
+                        if (_this.options.screenshotTaken)
+                            _this.options.screenshotTaken(_this.screenshotBase64);
                     });
                 }
             };

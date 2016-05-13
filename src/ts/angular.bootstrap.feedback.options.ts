@@ -16,5 +16,11 @@ module AngularBootstrapFeedback {
     sendFeedbackButtonPressed();
     cancelScreenshotOptionsButtonPressed();
     takeScreenshotOptionsButtonPressed();
+
+    // Screenshot Events
+    screenshotTaken(image: string);
+
+    // Modal Events
+    modalDismissed();
   }
 }

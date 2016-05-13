@@ -5,10 +5,10 @@ module AngularBootstrapFeedback {
 
     export class Screenshot implements ng.IComponentOptions {
         public controller: any;
-        public template: any;
+        public templateUrl: any;
         constructor() {
             this.controller = ['angularBootstrapFeedbackFactory', ScreenshotController];
-            this.template = ['$templateCache', ($templateCache: ng.ITemplateCacheService): Object => $templateCache.get('angular.bootstrap.feedback.screenshot.html')];
+            this.templateUrl = 'angular.bootstrap.feedback.screenshot.html';
         }
     }
 

@@ -13,7 +13,7 @@ var AngularBootstrapFeedback;
                 options: '=?'
             };
             this.controller = ['angularBootstrapFeedbackFactory', '$transclude', ButtonController];
-            this.template = ['$templateCache', function ($templateCache) { return $templateCache.get('angular.bootstrap.feedback.button.html'); }];
+            this.templateUrl = 'angular.bootstrap.feedback.button.html';
         }
         return Button;
     }());
@@ -332,7 +332,7 @@ var AngularBootstrapFeedback;
     var Screenshot = (function () {
         function Screenshot() {
             this.controller = ['angularBootstrapFeedbackFactory', ScreenshotController];
-            this.template = ['$templateCache', function ($templateCache) { return $templateCache.get('angular.bootstrap.feedback.screenshot.html'); }];
+            this.templateUrl = 'angular.bootstrap.feedback.screenshot.html';
         }
         return Screenshot;
     }());

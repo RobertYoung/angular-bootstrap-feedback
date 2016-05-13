@@ -5,7 +5,7 @@ module AngularBootstrapFeedback {
 
     export class Button implements ng.IComponentOptions {
         public controller: any;
-        public template: any;
+        public templateUrl: any;
         public transclude: boolean = true;
         public bindings: any;
 
@@ -14,7 +14,7 @@ module AngularBootstrapFeedback {
             options: '=?'
           };
           this.controller = ['angularBootstrapFeedbackFactory', '$transclude', ButtonController];
-          this.template = ['$templateCache', ($templateCache: ng.ITemplateCacheService): Object => $templateCache.get('angular.bootstrap.feedback.button.html')];
+          this.templateUrl = 'angular.bootstrap.feedback.button.html';
         }
     }
 

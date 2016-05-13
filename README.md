@@ -117,3 +117,8 @@ The angular components are split into 2 elements:
 |screenshotTaken|Fired when a user takes a screenshot|
 |highlightDrawn|Fired when the user draws a highlight square|
 |modalDismissed|Fired when the modal is dismissed|
+
+
+# Contributing
+
+Pull requests and issues are welcome.

@@ -124,7 +124,7 @@
       'toaster', 'ngAnimate'
     ]);
 
-    myApp.controller('appController', ['$scope', 'toaster', function($scope, toaster) {
+    myApp.controller('appController', ['$scope', 'toaster', 'angularBootstrapFeedbackFactory', function($scope, toaster, feedbackFactory) {
       $scope.options = {
         takeScreenshotButtonText: "takeScreenshotButtonText",
         submitButtonText: "submitButtonText",
@@ -148,11 +148,13 @@
       function submitButtonPressed() {
         console.log("Submit button pressed");
         toaster.pop({
-                type: 'success',
-                title: 'User Feedback',
-                body: 'Your feedback was sent successfully.',
-                showCloseButton: true
-            });
+          type: 'success',
+          title: 'User Feedback',
+          body: 'Your feedback was sent successfully.',
+          showCloseButton: true
+        });
+
+        feedbackFactory.closeModal();
       }
 
       function sendFeedbackButtonPressed() {

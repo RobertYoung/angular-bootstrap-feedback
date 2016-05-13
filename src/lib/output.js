@@ -158,6 +158,7 @@ var AngularBootstrapFeedback;
         Factory.prototype.setOptions = function (options) {
             options = options || {};
             this.options = options;
+            this.options.modalTitle = options.modalTitle ? options.modalTitle : 'Feedback';
             this.options.takeScreenshotButtonText = options.takeScreenshotButtonText ? options.takeScreenshotButtonText : 'Take Screenshot';
             this.options.submitButtonText = options.submitButtonText ? options.submitButtonText : 'Submit';
             this.options.sendFeedbackButtonText = options.sendFeedbackButtonText ? options.sendFeedbackButtonText : 'Send Feedback';

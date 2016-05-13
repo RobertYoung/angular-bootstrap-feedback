@@ -126,6 +126,7 @@
 
     myApp.controller('appController', ['$scope', 'toaster', 'angularBootstrapFeedbackFactory', function($scope, toaster, feedbackFactory) {
       $scope.options = {
+        modalTitle: 'modalTitle',
         takeScreenshotButtonText: "takeScreenshotButtonText",
         submitButtonText: "submitButtonText",
         sendFeedbackButtonText: "sendFeedbackButtonText",
@@ -145,8 +146,10 @@
         console.log("Take screenshot button pressed");
       }
 
-      function submitButtonPressed() {
+      function submitButtonPressed(form) {
         console.log("Submit button pressed");
+        console.log(form);
+
         toaster.pop({
           type: 'success',
           title: 'User Feedback',

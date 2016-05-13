@@ -3,6 +3,9 @@
 
 module AngularBootstrapFeedback {
   export interface IOptions {
+    // Modal
+    modalTitle: string;
+
     // Button Text
     takeScreenshotButtonText: string;
     submitButtonText:string;

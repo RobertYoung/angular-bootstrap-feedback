@@ -18,7 +18,7 @@ gulp.task('typescript', function () {
 	return gulp.src('src/ts/**/*.ts')
 		.pipe(ts({
 			noImplicitAny: true,
-			out: 'output.js'
+			out: 'angular.bootstrap.feedback.output.js'
 		}))
 		.pipe(gulp.dest('src/lib'));
 });
@@ -26,7 +26,8 @@ gulp.task('typescript', function () {
 gulp.task('template:cache', function () {
   return gulp.src('src/views/**/*.html')
     .pipe(templateCache({
-			module: 'angular.bootstrap.feedback'
+			module: 'angular.bootstrap.feedback',
+			filename: 'angular.bootstrap.feedback.templates.js'
 		}))
     .pipe(gulp.dest('src/lib'));
 });

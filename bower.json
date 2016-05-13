@@ -4,7 +4,11 @@
     "Robert Young"
   ],
   "description": "User feedback component for angular",
-  "main": "",
+  "main": [
+    "./src/css/angular.bootstrap.feedback.styles.css",
+    "./src/lib/angular.bootstrap.feedback.output.js",
+    "./src/lib/angular.bootstrap.feedback.templates.js"
+  ],
   "keywords": [
     "angular",
     "bootstrap",
@@ -18,7 +22,11 @@
     "node_modules",
     "bower_components",
     "test",
-    "tests"
+    "tests",
+    "gulpfile.js",
+    "package.json",
+    "tsconfig.json",
+    "typings.json"
   ],
   "dependencies": {
     "angular": "^1.5.0",

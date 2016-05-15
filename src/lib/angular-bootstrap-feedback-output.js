@@ -242,7 +242,7 @@ var AngularBootstrapFeedback;
                 _this.ctx.fillRect(parseInt(highlight.style.left), parseInt(highlight.style.top), parseInt(highlight.style.width), parseInt(highlight.style.height));
             });
         };
-        Factory.inject = ['$uibModal', '$document', '$templateCache', '$timeout'];
+        Factory.$inject = ['$uibModal', '$document', '$templateCache', '$timeout'];
         Factory.CANVAS_ID = 'feedback-canvas';
         Factory.FEEDBACK_HIGHLIGHT_CLASS = 'feedback-highlight';
         return Factory;

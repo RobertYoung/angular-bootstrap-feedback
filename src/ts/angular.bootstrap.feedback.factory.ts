@@ -45,7 +45,7 @@ module AngularBootstrapFeedback {
 
 
     export class Factory {
-        static inject = ['$uibModal', '$document', '$templateCache', '$timeout'];
+        static $inject = ['$uibModal', '$document', '$templateCache', '$timeout'];
         static CANVAS_ID: string = 'feedback-canvas';
         static FEEDBACK_HIGHLIGHT_CLASS: string = 'feedback-highlight';
 

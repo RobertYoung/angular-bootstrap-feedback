@@ -3,7 +3,7 @@
 
 module AngularBootstrapFeedback {
     export class ModalController {
-
+        
         constructor(private factory: IFactory, private $detection : any) {
             // this.factory.getUserFeedbackCategories();
             // this.factory.getMemberDetails();

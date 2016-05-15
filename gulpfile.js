@@ -11,6 +11,7 @@ var minifyCSS = require('gulp-minify-css');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var del = require('del');
+var sourcemaps = require('gulp-sourcemaps');
 
 var config = {
 	paths: {
@@ -66,7 +67,7 @@ gulp.task('typescript', function () {
 });
 
 gulp.task('copy', function () {
-	return gulp.src('./src/lib/**.js')
+	return gulp.src(['./src/lib/**/*.js'])
 	.pipe(concat(pkg.name + '.js'))
 	.pipe(header(banner, {pkg: pkg}))
 	.pipe(gulp.dest(config.paths.dist))
@@ -109,5 +110,8 @@ gulp.task('browsersync:serve', ['build'], function () {
 // ======================================================== //
 gulp.task('default', ['build'], function(){});
 
-gulp.task('build', ['clean', 'template:cache', 'typescript', 'styles', 'copy']);
+gulp.task('build', function() {
+	runSequence('clean', 'template:cache', 'typescript', 'styles', 'copy');
+});
 gulp.task('deploy', ['build']);
+// ======================================================== //

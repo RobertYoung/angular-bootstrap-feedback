@@ -1,5 +1,5 @@
 /// <reference path="../../typings/main.d.ts"/>
-/// <reference path="./angular.bootstrap.feedback.ts"/>
+/// <reference path="./angular-bootstrap-feedback.ts"/>
 
 module AngularBootstrapFeedback {
   export interface IOptions {

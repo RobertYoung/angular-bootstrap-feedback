@@ -12,6 +12,7 @@ var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var del = require('del');
 var sourcemaps = require('gulp-sourcemaps');
+var karma = require('karma').Server;
 
 var config = {
 	paths: {
@@ -56,13 +57,13 @@ gulp.task('styles', function() {
 });
 
 gulp.task('typescript', function () {
-	var tsConfig = ts.createProject(config.paths.tsconfig, {
+	var tsconfig = ts.createProject(config.paths.tsconfig, {
 		sortOutput: true,
 		out: pkg.name + '-output.js'
 	});
 
 	return gulp.src('src/ts/**/*.ts')
-	.pipe(ts(tsConfig))
+	.pipe(ts(tsconfig))
 	.pipe(gulp.dest('src/lib'));
 });
 
@@ -105,6 +106,20 @@ gulp.task('browsersync:serve', ['build'], function () {
 	});
 
 	gulp.watch("src/**/*.ts", ['typescript:watch']);
+});
+
+gulp.task('karma:unit', ['karma:typescript'], function (done) {
+	return new karma({
+		configFile: __dirname + "/karma.conf.js",
+		singleRun: true
+	}, done).start();
+});
+
+gulp.task('karma:typescript', function () {
+	var tsconfig = ts.createProject(config.paths.tsconfig);
+	return gulp.src('test/**/*.ts')
+	.pipe(ts(tsconfig))
+	.pipe(gulp.dest('test'));
 });
 
 // ======================================================== //

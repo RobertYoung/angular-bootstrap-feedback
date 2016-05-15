@@ -13,7 +13,9 @@
         "removeComments": true,
         "noLib": false,
         "preserveConstEnums": true,
-        "suppressImplicitAnyIndexErrors": true
+        "suppressImplicitAnyIndexErrors": true,
+        "sourceMap": true,
+		    "watch": true
     },
     "exclude": [
         "node_modules",

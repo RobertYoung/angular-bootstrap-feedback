@@ -10,9 +10,12 @@ var rename = require('gulp-rename');
 var minifyCSS = require('gulp-minify-css');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
+var del = require('del');
+
 var config = {
 	paths: {
 		dist: './dist',
+		lib: './src/lib',
 		tsconfig: './tsconfig.json'
 	}
 }
@@ -26,6 +29,14 @@ var banner = ['/**',
 ' * @license <%= pkg.license %>',
 ' */',
 ''].join('\n');
+
+gulp.task('clean', function () {
+  return del([
+		config.paths.dist + "/**/",
+		config.paths.dist + "/**/",
+		config.paths.lib + "/**/",
+  ]);
+});
 
 gulp.task('styles', function() {
 	gulp.src('./src/css/**.css')
@@ -98,5 +109,5 @@ gulp.task('browsersync:serve', ['build'], function () {
 // ======================================================== //
 gulp.task('default', ['build'], function(){});
 
-gulp.task('build', ['template:cache', 'typescript', 'styles', 'copy']);
+gulp.task('build', ['clean', 'template:cache', 'typescript', 'styles', 'copy']);
 gulp.task('deploy', ['build']);

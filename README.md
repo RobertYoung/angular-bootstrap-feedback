@@ -5,6 +5,12 @@
 
 # Overview
 A user feedback modal with screenshot and highlighting functionality built around Angular 1.5+.
+##### Features
+* Angular component(s)
+* Modal popup
+* User can create Screenshots
+* User can highlight screenshots
+* Include custom inputs
 
 [View Demo](https://robertyoung.github.io/angular-bootstrap-feedback/)
 
@@ -15,9 +21,10 @@ A user feedback modal with screenshot and highlighting functionality built aroun
 * **html2canvas** - 0.4.1+
 
 # Installation
-#### Bower.
-
+#### Bower
     bower install angular-bootstrap-feedback --save
+#### npm
+    npm install angular-bootstrap-feedback --save
 #### Manual
 Or, you can download source files straight from this repo, they're located in the `dist` folder.
 Just include the minified version of both `.js` and `.css` files.
@@ -100,11 +107,11 @@ The angular components are split into 2 elements:
 #### Text properties
 |Property|Description|Default|
 |:-------------|:-----------------------|------:|
-|modalTitle|Sets the title of the modal|**Feedback**|
-|submitButtonText|Sets the submit button value of the modal|**Submit**|
-|takeScreenshotButtonText|Sets the button text value that is fixed to the bottom of the users screen|**Take Screenshot**|
-|cancelScreenshotOptionsButtonText|The screenshot options cancel button text|**Cancel**|
-|takeScreenshotOptionsButtonText|The screenshot options capture button text|**Take Screenshot**|
+|modalTitle|Sets the title of the modal|**'Feedback'**|
+|submitButtonText|Sets the submit button value of the modal|**'Submit'**|
+|takeScreenshotButtonText|Sets the button text value that is fixed to the bottom of the users screen|**'Take Screenshot'**|
+|cancelScreenshotOptionsButtonText|The screenshot options cancel button text|**'Cancel'**|
+|takeScreenshotOptionsButtonText|The screenshot options capture button text|**'Take Screenshot'**|
 
 #### Event callbacks
 |Event|Description|

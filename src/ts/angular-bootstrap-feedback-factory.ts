@@ -1,5 +1,6 @@
 ﻿/// <reference path="../../typings/main.d.ts"/>
 /// <reference path="./angular-bootstrap-feedback.ts"/>
+/// <reference path="./angular-bootstrap-feedback-modal.ts" />
 
 module AngularBootstrapFeedback {
     export interface IFactory {

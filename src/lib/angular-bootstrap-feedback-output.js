@@ -52,6 +52,26 @@ angular
     .component('angularBootstrapFeedback', new AngularBootstrapFeedback.Button());
 var AngularBootstrapFeedback;
 (function (AngularBootstrapFeedback) {
+    var ModalController = (function () {
+        function ModalController(factory, $detection) {
+            this.factory = factory;
+            this.$detection = $detection;
+            this.factory.resetScreenshot();
+            this.factory.appendTransclodedContent();
+        }
+        ModalController.prototype.closeModal = function () {
+            this.factory.closeModal();
+        };
+        ModalController.prototype.submitButtonPressed = function (form) {
+            if (this.factory.options.submitButtonPressed)
+                this.factory.options.submitButtonPressed(form);
+        };
+        return ModalController;
+    }());
+    AngularBootstrapFeedback.ModalController = ModalController;
+})(AngularBootstrapFeedback || (AngularBootstrapFeedback = {}));
+var AngularBootstrapFeedback;
+(function (AngularBootstrapFeedback) {
     var Factory = (function () {
         function Factory($uibModal, $document, $templateCache, $timeout) {
             var _this = this;
@@ -250,26 +270,6 @@ var AngularBootstrapFeedback;
     AngularBootstrapFeedback.Factory = Factory;
 })(AngularBootstrapFeedback || (AngularBootstrapFeedback = {}));
 angular.module('angular.bootstrap.feedback').service('angularBootstrapFeedbackFactory', AngularBootstrapFeedback.Factory);
-var AngularBootstrapFeedback;
-(function (AngularBootstrapFeedback) {
-    var ModalController = (function () {
-        function ModalController(factory, $detection) {
-            this.factory = factory;
-            this.$detection = $detection;
-            this.factory.resetScreenshot();
-            this.factory.appendTransclodedContent();
-        }
-        ModalController.prototype.closeModal = function () {
-            this.factory.closeModal();
-        };
-        ModalController.prototype.submitButtonPressed = function (form) {
-            if (this.factory.options.submitButtonPressed)
-                this.factory.options.submitButtonPressed(form);
-        };
-        return ModalController;
-    }());
-    AngularBootstrapFeedback.ModalController = ModalController;
-})(AngularBootstrapFeedback || (AngularBootstrapFeedback = {}));
 var AngularBootstrapFeedback;
 (function (AngularBootstrapFeedback) {
     var Screenshot = (function () {

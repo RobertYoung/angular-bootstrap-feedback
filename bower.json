@@ -5,9 +5,8 @@
   ],
   "description": "User feedback component for angular",
   "main": [
-    "./src/css/angular.bootstrap.feedback.styles.css",
-    "./src/lib/angular.bootstrap.feedback.output.js",
-    "./src/lib/angular.bootstrap.feedback.templates.js"
+    "./dist/angular-bootstrap-feedback.js",
+    ".dist/angular-bootstrap-feedback-styles.css"
   ],
   "keywords": [
     "angular",

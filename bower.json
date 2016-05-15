@@ -26,7 +26,11 @@
     "gulpfile.js",
     "package.json",
     "tsconfig.json",
-    "typings.json"
+    "typings.json",
+    "src",
+    "index.html",
+    "stylesheets",
+    "params.json"
   ],
   "dependencies": {
     "angular": "^1.5.0",

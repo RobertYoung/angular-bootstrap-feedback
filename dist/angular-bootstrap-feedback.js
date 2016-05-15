@@ -1,9 +1,13 @@
-/// <reference path="../../typings/main.d.ts"/>
+/**
+ * angular-bootstrap-feedback - User feedback form for angular with screenshot and highlighting
+ * @author Robert Young
+ * @version v1.0.0
+ * @link https://robertyoung.github.io/angular-bootstrap-feedback/
+ * @license MIT
+ */
 angular.module('angular.bootstrap.feedback', [
     'ui.bootstrap'
 ]);
-/// <reference path="../../typings/main.d.ts"/>
-/// <reference path="./angular.bootstrap.feedback.ts"/>
 var AngularBootstrapFeedback;
 (function (AngularBootstrapFeedback) {
     var Button = (function () {
@@ -53,8 +57,6 @@ var AngularBootstrapFeedback;
 angular
     .module('angular.bootstrap.feedback')
     .component('angularBootstrapFeedback', new AngularBootstrapFeedback.Button());
-/// <reference path="../../typings/main.d.ts"/>
-/// <reference path="./angular.bootstrap.feedback.ts"/>
 var AngularBootstrapFeedback;
 (function (AngularBootstrapFeedback) {
     var Factory = (function () {
@@ -64,9 +66,7 @@ var AngularBootstrapFeedback;
             this.$document = $document;
             this.$templateCache = $templateCache;
             this.$timeout = $timeout;
-            // Options
             this.options = {};
-            // HTML Selectors //
             this.modalElementSelector = 'div[uib-modal-window]';
             this.modalBackdropElementSelector = 'div[uib-modal-backdrop]';
             this.sendFeedbackElementSelector = 'div.send-feedback';
@@ -103,7 +103,6 @@ var AngularBootstrapFeedback;
                     _this.options.highlightDrawn(angular.element(highlight));
             };
         }
-        // Send Feedback Methods //
         Factory.prototype.hideSendFeedback = function () {
             var sendFeedback = angular.element(this.sendFeedbackElementSelector);
             sendFeedback.addClass('hidden');
@@ -112,7 +111,6 @@ var AngularBootstrapFeedback;
             var sendFeedback = angular.element(this.sendFeedbackElementSelector);
             sendFeedback.removeClass('hidden');
         };
-        // Modal Methods //
         Factory.prototype.openModal = function () {
             var _this = this;
             var modalSettings = {
@@ -154,7 +152,6 @@ var AngularBootstrapFeedback;
                 element.append(_this.transcludedContent);
             });
         };
-        // Options
         Factory.prototype.setOptions = function (options) {
             options = options || {};
             this.options = options;
@@ -165,34 +162,8 @@ var AngularBootstrapFeedback;
             this.options.cancelScreenshotOptionsButtonText = options.cancelScreenshotOptionsButtonText ? options.cancelScreenshotOptionsButtonText : 'Cancel';
             this.options.takeScreenshotOptionsButtonText = options.takeScreenshotOptionsButtonText ? options.takeScreenshotOptionsButtonText : 'Take Screenshot';
         };
-        // User Information //
         Factory.prototype.getUserAgentInfo = function () {
-            // const browser: UAParser.IBrowser = this.uaParser.getBrowser();
-            // const device: UAParser.IDevice = this.uaParser.getDevice();
-            // const cpu: UAParser.ICPU = this.uaParser.getCPU();
-            // const engine: UAParser.IEngine = this.uaParser.getEngine();
-            // const os: UAParser.IEngine = this.uaParser.getOS();
-            //
-            // this.userFeedback.browser = browser.name;
-            // this.userFeedback.browserVersion = browser.version;
-            // this.userFeedback.cpuArchitecture = cpu.architecture;
-            // this.userFeedback.deviceType = device.type;
-            // this.userFeedback.deviceModel = device.model;
-            // this.userFeedback.deviceVendor = device.vendor;
-            // this.userFeedback.engineName = engine.name;
-            // this.userFeedback.engineVersion = engine.version;
-            // this.userFeedback.os = os.name;
-            // this.userFeedback.osVersion = os.version;
         };
-        // getState() {
-        //     this.userFeedback.state = this.$state.current.name;
-        //     this.userFeedback.stateParams = JSON.stringify(this.$state.params);
-        // }
-        //
-        // getUrl() {
-        //     this.userFeedback.url = this.$location.absUrl();
-        // }
-        // Screenshot Methods //
         Factory.prototype.takeScreenshot = function () {
             var _this = this;
             var options = {
@@ -226,7 +197,6 @@ var AngularBootstrapFeedback;
             highlights.remove();
             this.ctx = null;
         };
-        // Document Events //
         Factory.prototype.setupDocumentEvents = function () {
             var _this = this;
             this.$document.on('mousedown', function (event) {
@@ -287,46 +257,26 @@ var AngularBootstrapFeedback;
     AngularBootstrapFeedback.Factory = Factory;
 })(AngularBootstrapFeedback || (AngularBootstrapFeedback = {}));
 angular.module('angular.bootstrap.feedback').service('angularBootstrapFeedbackFactory', AngularBootstrapFeedback.Factory);
-/// <reference path="../../typings/main.d.ts"/>
-/// <reference path="./angular.bootstrap.feedback.ts"/>
 var AngularBootstrapFeedback;
 (function (AngularBootstrapFeedback) {
     var ModalController = (function () {
         function ModalController(factory, $detection) {
             this.factory = factory;
             this.$detection = $detection;
-            // this.factory.getUserFeedbackCategories();
-            // this.factory.getMemberDetails();
             this.factory.resetScreenshot();
-            // this.factory.userFeedback.userFeedbackCategoryId = null;
-            // this.factory.userFeedback = new UserFeedback();
-            // this.factory.userFeedback.userFeedbackCategoryId = null;
             this.factory.appendTransclodedContent();
         }
-        // Public Methods //
         ModalController.prototype.closeModal = function () {
             this.factory.closeModal();
         };
         ModalController.prototype.submitButtonPressed = function (form) {
             if (this.factory.options.submitButtonPressed)
                 this.factory.options.submitButtonPressed(form);
-            // if (form.$invalid) {
-            //     return;
-            // }
-            //
-            // this.factory.getUserAgentInfo();
-            // this.factory.getState();
-            // this.factory.getUrl();
-            // this.factory.postUserFeedback();
         };
         return ModalController;
     }());
     AngularBootstrapFeedback.ModalController = ModalController;
 })(AngularBootstrapFeedback || (AngularBootstrapFeedback = {}));
-/// <reference path="../../typings/main.d.ts"/>
-/// <reference path="./angular.bootstrap.feedback.ts"/>
-/// <reference path="../../typings/main.d.ts"/>
-/// <reference path="./angular.bootstrap.feedback.ts"/>
 var AngularBootstrapFeedback;
 (function (AngularBootstrapFeedback) {
     var Screenshot = (function () {
@@ -344,14 +294,9 @@ var AngularBootstrapFeedback;
         ScreenshotController.prototype.takeScreenshotButtonPressed = function () {
             if (this.factory.options.takeScreenshotButtonPressed)
                 this.factory.options.takeScreenshotButtonPressed();
-            // If mobile, take screenshot only
-            // if (this.$detection.isAndroid() || this.$detection.isiOS() || this.$detection.isWindowsPhone() || this.$detection.isBB10()) {
-            //     this.factory.takeScreenshot();
-            // } else {
             this.factory.hideModal();
             this.factory.isScreenshotMode = true;
             this.factory.createCanvas();
-            // }
         };
         return ScreenshotController;
     }());
@@ -359,3 +304,7 @@ var AngularBootstrapFeedback;
 angular
     .module('angular.bootstrap.feedback')
     .component('angularBootstrapFeedbackScreenshot', new AngularBootstrapFeedback.Screenshot());
+
+angular.module("angular.bootstrap.feedback").run(["$templateCache", function($templateCache) {$templateCache.put("angular.bootstrap.feedback.button.html","<div class=\"send-feedback\"><div ng-if=\"!$ctrl.factory.isScreenshotMode\" ng-click=\"$ctrl.openModal()\">{{$ctrl.factory.options.sendFeedbackButtonText}} <span class=\"glyphicon glyphicon-comment\" aria-hidden=\"true\"></span></div><div ng-if=\"$ctrl.factory.isScreenshotMode\"><span>Options</span><div class=\"row\"><div class=\"col-xs-12\"><button class=\"btn btn-danger col-xs-12\" ng-click=\"$ctrl.cancelScreenshotPressed()\">{{$ctrl.factory.options.cancelScreenshotOptionsButtonText}}</button></div></div><div class=\"row\"><div class=\"col-xs-12\"><button class=\"btn btn-success col-xs-12\" ng-click=\"$ctrl.takeScreenshotPressed()\">{{$ctrl.factory.options.takeScreenshotOptionsButtonText}}</button></div></div></div></div>");
+$templateCache.put("angular.bootstrap.feedback.modal.html","<form novalidate=\"\" name=\"userFeedbackForm\"><div class=\"modal-header\"><h3 class=\"modal-title pull-left\">{{$ctrl.factory.options.modalTitle}}</h3><a><i class=\"glyphicon glyphicon-remove pull-right add-margin-right-1\" style=\"font-size: 18px\" data-ng-click=\"$ctrl.closeModal(); $event.stopPropagation()\"></i></a></div><div class=\"modal-body\"></div><div class=\"modal-footer\"><button class=\"btn btn-primary\" type=\"submit\" ng-click=\"$ctrl.submitButtonPressed(userFeedbackForm)\">{{$ctrl.factory.options.submitButtonText}}</button></div></form>");
+$templateCache.put("angular.bootstrap.feedback.screenshot.html","<div class=\"feedback-screenshot\"><img ng-src=\"{{$ctrl.factory.screenshotBase64}}\"></div><div class=\"btn-toolbar\"><button class=\"btn btn-default\" type=\"button\" ng-click=\"$ctrl.takeScreenshotButtonPressed()\"><span class=\"glyphicon glyphicon-camera\" aria-hidden=\"true\"></span> {{$ctrl.factory.options.takeScreenshotButtonText}}</button></div>");}]);

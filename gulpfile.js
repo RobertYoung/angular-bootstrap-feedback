@@ -8,6 +8,14 @@ var csscomb = require('gulp-csscomb');
 var header = require('gulp-header');
 var rename = require('gulp-rename');
 var minifyCSS = require('gulp-minify-css');
+var concat = require('gulp-concat');
+var uglify = require('gulp-uglify');
+var config = {
+	paths: {
+		dist: './dist',
+		tsconfig: './tsconfig.json'
+	}
+}
 
 var pkg = require('./package.json');
 var banner = ['/**',
@@ -19,16 +27,6 @@ var banner = ['/**',
 ' */',
 ''].join('\n');
 
-// define tasks here
-gulp.task('default', function(){
-	// run tasks here
-	// set up watch handlers here
-});
-
-gulp.task('build', function () {
-	runSequence('template:cache', 'typescript');
-})
-
 gulp.task('styles', function() {
 	gulp.src('./src/css/**.css')
 	.pipe(csscomb())
@@ -36,22 +34,37 @@ gulp.task('styles', function() {
 	.pipe(rename({
 		basename: pkg.name + ".styles"
 	}))
-	.pipe(gulp.dest('dist'))
+	.pipe(gulp.dest(config.paths.dist))
 	.pipe(minifyCSS())
 	.pipe(rename({
 		suffix: '.min'
 	}))
 	.pipe(header(banner, { pkg : pkg }))
-	.pipe(gulp.dest('dist'));
+	.pipe(gulp.dest(config.paths.dist));
 });
 
 gulp.task('typescript', function () {
+	var tsConfig = ts.createProject(config.paths.tsconfig, {
+		sortOutput: true,
+		out: pkg.name + '-output.js'
+	});
+
 	return gulp.src('src/ts/**/*.ts')
-	.pipe(ts({
-		noImplicitAny: true,
-		out: 'angular.bootstrap.feedback.output.js'
-	}))
+	.pipe(ts(tsConfig))
 	.pipe(gulp.dest('src/lib'));
+});
+
+gulp.task('copy', function () {
+	return gulp.src('./src/lib/**.js')
+	.pipe(concat(pkg.name + '.js'))
+	.pipe(header(banner, {pkg: pkg}))
+	.pipe(gulp.dest(config.paths.dist))
+	.pipe(rename({
+		suffix: '.min'
+	}))
+	.pipe(uglify())
+	.pipe(header(banner, { pkg : pkg }))
+	.pipe(gulp.dest(config.paths.dist));
 });
 
 gulp.task('template:cache', function () {
@@ -63,12 +76,14 @@ gulp.task('template:cache', function () {
 	}))
 	.pipe(templateCache({
 		module: 'angular.bootstrap.feedback',
-		filename: 'angular.bootstrap.feedback.templates.js'
+		filename: pkg.name + '-templates.js'
 	}))
 	.pipe(gulp.dest('src/lib'));
 });
 
-gulp.task('typescript:watch', ['build'], browserSync.reload);
+gulp.task('typescript:watch', ['build'], function () {
+	browserSync.reload();
+});
 
 gulp.task('browsersync:serve', ['build'], function () {
 	browserSync.init({
@@ -79,3 +94,9 @@ gulp.task('browsersync:serve', ['build'], function () {
 
 	gulp.watch("src/**/*.ts", ['typescript:watch']);
 });
+
+// ======================================================== //
+gulp.task('default', ['build'], function(){});
+
+gulp.task('build', ['template:cache', 'typescript', 'styles', 'copy']);
+gulp.task('deploy', ['build']);

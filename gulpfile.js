@@ -112,7 +112,7 @@ gulp.task('browsersync:serve', ['build'], function () {
 gulp.task('karma:unit', ['karma:typescript'], function (done) {
 	return new karma({
 		configFile: __dirname + "/karma.conf.js",
-		singleRun: false
+		singleRun: true
 	}, done).start();
 });
 

@@ -4,11 +4,11 @@
 }
 
 .send-feedback {
-  -webkit-animation: slide 0.9s forwards;
-  -moz-animation: slide 0.9s forwards;
-  -ms-animation: slide 0.9s forwards;
-  -o-animation: slide 0.9s forwards;
-  animation: slide 0.9s forwards;
+  -webkit-animation: slide 0.3s forwards;
+  -moz-animation: slide 0.3s forwards;
+  -ms-animation: slide 0.3s forwards;
+  -o-animation: slide 0.3s forwards;
+  animation: slide 0.3s forwards;
   bottom: -40px;
   right: 56px;
   background-color: #797979;

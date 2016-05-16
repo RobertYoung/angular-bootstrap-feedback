@@ -1,6 +1,6 @@
 {
   "name": "angular-bootstrap-feedback",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "User feedback form for angular with screenshot and highlighting",
   "main": "./dist",
   "homepage": "https://robertyoung.github.io/angular-bootstrap-feedback/",

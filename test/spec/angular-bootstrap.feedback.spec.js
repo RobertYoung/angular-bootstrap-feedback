@@ -12,6 +12,7 @@ describe('Angular Bootstrap Feedback', function () {
         scope.$digest();
     }));
     it('should exist', function () {
-        expect(true).toBe(true);
+        console.log(ctrl);
+        expect(ctrl).toBeDefined();
     });
 });

@@ -24,6 +24,7 @@ describe('Angular Bootstrap Feedback', () => {
   	}));
 
   it('should exist', () => {
-    expect(true).toBe(true);
+    console.log(ctrl);
+    expect(ctrl).toBeDefined();
   });
 });

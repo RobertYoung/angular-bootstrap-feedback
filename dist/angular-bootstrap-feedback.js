@@ -16,7 +16,7 @@ var AngularBootstrapFeedback;
             this.bindings = {
                 options: '=?'
             };
-            this.controller = ['angularBootstrapFeedbackFactory', '$transclude', ButtonController];
+            this.controller = ButtonController;
             this.templateUrl = 'angular.bootstrap.feedback.button.html';
         }
         return Button;
@@ -51,8 +51,10 @@ var AngularBootstrapFeedback;
                 this.factory.options.takeScreenshotOptionsButtonPressed();
             this.factory.takeScreenshot();
         };
+        ButtonController.$inject = ['angularBootstrapFeedbackFactory', '$transclude'];
         return ButtonController;
     }());
+    AngularBootstrapFeedback.ButtonController = ButtonController;
 })(AngularBootstrapFeedback || (AngularBootstrapFeedback = {}));
 angular
     .module('angular.bootstrap.feedback')

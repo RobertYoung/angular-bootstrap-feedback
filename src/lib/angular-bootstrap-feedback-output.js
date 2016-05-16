@@ -46,6 +46,7 @@ var AngularBootstrapFeedback;
         };
         return ButtonController;
     }());
+    AngularBootstrapFeedback.ButtonController = ButtonController;
 })(AngularBootstrapFeedback || (AngularBootstrapFeedback = {}));
 angular
     .module('angular.bootstrap.feedback')

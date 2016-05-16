@@ -18,9 +18,9 @@ module AngularBootstrapFeedback {
         }
     }
 
-    class ButtonController {
+    export class ButtonController {
         options: IOptions;
-
+        
         constructor(private factory: IFactory, private transclude: ng.ITranscludeFunction) {}
 
         $onInit() {

@@ -28,11 +28,11 @@
     padding: 5px 5px 2px 5px;
 
     cursor: pointer;
-    -webkit-animation: slide .9s forwards;
-       -moz-animation: slide .9s forwards;
-        -ms-animation: slide .9s forwards;
-         -o-animation: slide .9s forwards;
-            animation: slide .9s forwards;
+    -webkit-animation: slide .3s forwards;
+       -moz-animation: slide .3s forwards;
+        -ms-animation: slide .3s forwards;
+         -o-animation: slide .3s forwards;
+            animation: slide .3s forwards;
     text-align: center;
 
     color: #eee;
@@ -63,4 +63,9 @@
     z-index: 9000;
 
     cursor: crosshair;
+}
+
+.close-modal-button
+{
+    cursor: pointer;
 }

@@ -1,6 +1,6 @@
 /** FEEDBACK */
 @keyframes slide {
-    100% { bottom: 0; }
+  100% { bottom: 0; }
 }
 
 .send-feedback {
@@ -31,18 +31,18 @@
 }
 
 .feedback-screenshot img {
-    width: 100%;
-    min-height: 230px;
-    border: 5px solid #eee;
-    border-radius: 12px;
-    object-fit: cover;
+  width: 100%;
+  min-height: 230px;
+  border: 5px solid #eee;
+  border-radius: 12px;
+  object-fit: cover;
 }
 #feedback-canvas {
-    cursor: crosshair;
-    z-index: 9000;
-position: absolute;
+  cursor: crosshair;
+  z-index: 9000;
+  position: absolute;
 }
 
 .close-modal-button {
- cursor: pointer;
+  cursor: pointer;
 }

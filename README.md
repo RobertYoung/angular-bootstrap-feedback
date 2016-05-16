@@ -23,8 +23,6 @@ A user feedback modal with screenshot and highlighting functionality built aroun
 # Installation
 #### Bower
     bower install angular-bootstrap-feedback --save
-#### npm
-    npm install angular-bootstrap-feedback --save
 #### Manual
 Or, you can download source files straight from this repo, they're located in the `dist` folder.
 Just include the minified version of both `.js` and `.css` files.

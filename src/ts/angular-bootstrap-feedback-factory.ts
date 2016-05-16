@@ -4,19 +4,19 @@
 
 module AngularBootstrapFeedback {
     export interface IFactory {
-        isScreenshotMode: boolean;
-        transcludedContent: any;
+        isScreenshotMode:boolean;
+        transcludedContent:any;
         // $uibModalInstance: ng.ui.bootstrap.IModalServiceInstance,
 
-        screenshotBase64: string;
+        screenshotBase64:string;
 
         // Options
-        setOptions(options: IOptions);
-        options: IOptions;
+        setOptions(options:IOptions);
+        options:IOptions;
 
         // Selectors
-        modalElementSelector: string;
-        modalBackdropElementSelector: string;
+        modalElementSelector:string;
+        modalBackdropElementSelector:string;
 
         // Methods
         openModal();
@@ -33,6 +33,10 @@ module AngularBootstrapFeedback {
         // getState();
         // getUrl();
 
+        // Send Feedback Methods //
+        showSendFeedback();
+        hideSendFeedback();
+
         // // Screenshot Methods //
         takeScreenshot();
         resetScreenshot();
@@ -47,35 +51,38 @@ module AngularBootstrapFeedback {
 
     export class Factory {
         static $inject = ['$uibModal', '$document', '$templateCache', '$timeout'];
-        static CANVAS_ID: string = 'feedback-canvas';
-        static FEEDBACK_HIGHLIGHT_CLASS: string = 'feedback-highlight';
+        static CANVAS_ID:string = 'feedback-canvas';
+        static FEEDBACK_HIGHLIGHT_CLASS:string = 'feedback-highlight';
 
         // Screenshot data //
-        isScreenshotMode: boolean;
-        $uibModalInstance: ng.ui.bootstrap.IModalServiceInstance;
+        isScreenshotMode:boolean;
+        $uibModalInstance:ng.ui.bootstrap.IModalServiceInstance;
 
-        screenshotBase64: string;
+        screenshotBase64:string;
 
         // Options
-        private options: IOptions = <IOptions>{};
+        private options:IOptions = <IOptions>{};
 
         // HTML Selectors //
-        private modalElementSelector: string = 'div[uib-modal-window]';
-        private modalBackdropElementSelector: string = 'div[uib-modal-backdrop]';
-        private sendFeedbackElementSelector: string = 'div.send-feedback';
-        private modalBodyElementSelector: string = `${this.modalElementSelector} .modal-body`;
+        private modalElementSelector:string = 'div[uib-modal-window]';
+        private modalBackdropElementSelector:string = 'div[uib-modal-backdrop]';
+        private sendFeedbackElementSelector:string = 'div.send-feedback';
+        private modalBodyElementSelector:string = `${this.modalElementSelector} .modal-body`;
 
         // Canvas Methods //
         private ctx;
-        private isDrawing: boolean = false;
-        private centerX: number;
-        private centerY: number;
+        private isDrawing:boolean = false;
+        private centerX:number;
+        private centerY:number;
 
         // Transclude
-        private transcludedContent: any;
+        private transcludedContent:any;
+        private isOpen:boolean;
 
-        constructor(private $uibModal: ng.ui.bootstrap.IModalService, private $document: ng.IDocumentService, private $templateCache: ng.ITemplateCacheService,
-        private $timeout: ng.ITimeoutService) { }
+        constructor(private $uibModal:ng.ui.bootstrap.IModalService, private $document:ng.IDocumentService, private $templateCache:ng.ITemplateCacheService,
+                    private $timeout:ng.ITimeoutService) {
+            this.isOpen = false;
+        }
 
         // Send Feedback Methods //
         hideSendFeedback() {
@@ -90,60 +97,82 @@ module AngularBootstrapFeedback {
 
         // Modal Methods //
         openModal() {
-            const modalSettings: ng.ui.bootstrap.IModalSettings = {
-                animation: true,
-                size: "lg",
-                template: <string>this.$templateCache.get("angular.bootstrap.feedback.modal.html"),
-                controller: ['angularBootstrapFeedbackFactory', ModalController],
-                controllerAs: '$ctrl'
+            if (!this.isOpen) {
+                this.hideSendFeedback();
+                const modalSettings:ng.ui.bootstrap.IModalSettings = {
+                    animation: true,
+                    size: "lg",
+                    template: <string>this.$templateCache.get("angular.bootstrap.feedback.modal.html"),
+                    controller: ['angularBootstrapFeedbackFactory', ModalController],
+                    controllerAs: '$ctrl'
+                };
+
+                this.$uibModalInstance = this.$uibModal.open(modalSettings);
+                this.$uibModalInstance.result.then(() => {
+
+                }, () => {
+                    if (this.options.modalDismissed) {
+                        this.showSendFeedback();
+                        this.options.modalDismissed();
+                        this.isOpen = false;
+                    }
+                });
+
+                this.isOpen = true;
             }
-
-            this.$uibModalInstance = this.$uibModal.open(modalSettings);
-            this.$uibModalInstance.result.then(() => {
-
-            }, () => {
-              if (this.options.modalDismissed) this.options.modalDismissed();
-            });
         }
 
         hideModal() {
-            const modal = angular.element(this.modalElementSelector);
-            const modalBackdrop = angular.element(this.modalBackdropElementSelector);
-            modal.addClass('hidden');
-            modalBackdrop.addClass('hidden');
+            if (this.isOpen) {
+                const modal = angular.element(this.modalElementSelector);
+                const modalBackdrop = angular.element(this.modalBackdropElementSelector);
+                modal.addClass('hidden');
+                modalBackdrop.addClass('hidden');
+                this.isOpen = false;
+            }
         }
 
         showModal() {
-            const modal = angular.element(this.modalElementSelector);
-            const modalBackdrop = angular.element(this.modalBackdropElementSelector);
-            modal.removeClass('hidden');
-            modalBackdrop.removeClass('hidden');
+            if (!this.isOpen) {
+                const modal = angular.element(this.modalElementSelector);
+                const modalBackdrop = angular.element(this.modalBackdropElementSelector);
+                modal.removeClass('hidden');
+                modalBackdrop.removeClass('hidden');
+                this.isOpen = true;
+            }
         }
 
         closeModal() {
-            this.$uibModalInstance.close();
-            this.destroyCanvas();
+            if (this.isOpen) {
+                this.showSendFeedback();
+                this.$uibModalInstance.close();
+                this.destroyCanvas();
 
-            if (this.options.modalDismissed) this.options.modalDismissed();
+                if (this.options.modalDismissed) {
+                    this.options.modalDismissed();
+                }
+
+                this.isOpen = false;
+            }
         }
 
         appendTransclodedContent() {
-          this.$timeout(() => {
-            const element = angular.element(this.modalBodyElementSelector);
-            element.append(this.transcludedContent);
-          });
+            this.$timeout(() => {
+                const element = angular.element(this.modalBodyElementSelector);
+                element.append(this.transcludedContent);
+            });
         }
 
         // Options
-        setOptions(options: IOptions) {
-          options = options || <IOptions>{};
-          this.options = options;
-          this.options.modalTitle = options.modalTitle ? options.modalTitle : 'Feedback';
-          this.options.takeScreenshotButtonText = options.takeScreenshotButtonText ? options.takeScreenshotButtonText : 'Take Screenshot';
-          this.options.submitButtonText = options.submitButtonText ? options.submitButtonText : 'Submit';
-          this.options.sendFeedbackButtonText = options.sendFeedbackButtonText ? options.sendFeedbackButtonText : 'Send Feedback';
-          this.options.cancelScreenshotOptionsButtonText = options.cancelScreenshotOptionsButtonText ? options.cancelScreenshotOptionsButtonText : 'Cancel';
-          this.options.takeScreenshotOptionsButtonText = options.takeScreenshotOptionsButtonText ? options.takeScreenshotOptionsButtonText : 'Take Screenshot';
+        setOptions(options:IOptions) {
+            options = options || <IOptions>{};
+            this.options = options;
+            this.options.modalTitle = options.modalTitle ? options.modalTitle : 'Feedback';
+            this.options.takeScreenshotButtonText = options.takeScreenshotButtonText ? options.takeScreenshotButtonText : 'Take Screenshot';
+            this.options.submitButtonText = options.submitButtonText ? options.submitButtonText : 'Submit';
+            this.options.sendFeedbackButtonText = options.sendFeedbackButtonText ? options.sendFeedbackButtonText : 'Send Feedback';
+            this.options.cancelScreenshotOptionsButtonText = options.cancelScreenshotOptionsButtonText ? options.cancelScreenshotOptionsButtonText : 'Cancel';
+            this.options.takeScreenshotOptionsButtonText = options.takeScreenshotOptionsButtonText ? options.takeScreenshotOptionsButtonText : 'Take Screenshot';
         }
 
         // User Information //
@@ -177,11 +206,10 @@ module AngularBootstrapFeedback {
 
         // Screenshot Methods //
         takeScreenshot() {
-            var options: Html2Canvas.Html2CanvasOptions = {
+            var options:Html2Canvas.Html2CanvasOptions = {
                 onrendered: canvas => {
                     this.isScreenshotMode = false;
                     this.showModal();
-                    this.showSendFeedback();
                     this.destroyCanvas();
 
                     canvas.style.width = '100%';
@@ -235,7 +263,7 @@ module AngularBootstrapFeedback {
             this.$document.off('mousemove');
         }
 
-        onMouseDown = (event: any) => {
+        onMouseDown = (event:any) => {
             this.centerX = event.pageX;
             this.centerY = event.pageY;
 
@@ -246,7 +274,7 @@ module AngularBootstrapFeedback {
             this.redraw();
         }
 
-        onMouseMove = (event: any) => {
+        onMouseMove = (event:any) => {
             if (this.isDrawing) {
                 const width = event.pageX - this.centerX;
                 const height = event.pageY - this.centerY;
@@ -259,7 +287,7 @@ module AngularBootstrapFeedback {
             }
         }
 
-        onMouseUp = (event: any) => {
+        onMouseUp = (event:any) => {
             this.isDrawing = false;
 
             const width = event.pageX - this.centerX;
@@ -310,7 +338,7 @@ module AngularBootstrapFeedback {
         private redraw() {
             const highlights = angular.element(`.${Factory.FEEDBACK_HIGHLIGHT_CLASS}`);
 
-            highlights.each((index, highlight: any) => {
+            highlights.each((index, highlight:any) => {
                 this.ctx.clearRect(parseInt(highlight.style.left), parseInt(highlight.style.top), parseInt(highlight.style.width), parseInt(highlight.style.height));
                 this.ctx.strokeRect(parseInt(highlight.style.left), parseInt(highlight.style.top), parseInt(highlight.style.width), parseInt(highlight.style.height));
                 this.ctx.fillRect(parseInt(highlight.style.left), parseInt(highlight.style.top), parseInt(highlight.style.width), parseInt(highlight.style.height));

@@ -20,7 +20,7 @@ var config = {
 		lib: './src/lib',
 		tsconfig: './tsconfig.json'
 	}
-}
+};
 
 var pkg = require('./package.json');
 var banner = ['/**',
@@ -36,19 +36,16 @@ var banner = ['/**',
 gulp.task('clean', function () {
   return del([
 		config.paths.dist + "/**/",
-		config.paths.dist + "/**/",
-		config.paths.lib + "/**/",
+		config.paths.lib + "/**/"
   ]);
 });
 
 gulp.task('styles', function() {
 	gulp.src('./src/css/**.css')
 	.pipe(csscomb())
-	.pipe(header(banner, {pkg: pkg}))
 	.pipe(rename({
 		basename: pkg.name + "-styles"
 	}))
-	.pipe(gulp.dest(config.paths.dist))
 	.pipe(minifyCSS())
 	.pipe(rename({
 		suffix: '.min'

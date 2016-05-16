@@ -106,19 +106,22 @@ var AngularBootstrapFeedback;
         };
         Factory.prototype.openModal = function () {
             var _this = this;
-            var modalSettings = {
-                animation: true,
-                size: "lg",
-                template: this.$templateCache.get("angular.bootstrap.feedback.modal.html"),
-                controller: ['angularBootstrapFeedbackFactory', AngularBootstrapFeedback.ModalController],
-                controllerAs: '$ctrl'
-            };
-            this.$uibModalInstance = this.$uibModal.open(modalSettings);
-            this.$uibModalInstance.result.then(function () {
-            }, function () {
-                if (_this.options.modalDismissed)
-                    _this.options.modalDismissed();
-            });
+            if (!this.isOpen) {
+                var modalSettings = {
+                    animation: true,
+                    size: "lg",
+                    template: this.$templateCache.get("angular.bootstrap.feedback.modal.html"),
+                    controller: ['angularBootstrapFeedbackFactory', AngularBootstrapFeedback.ModalController],
+                    controllerAs: '$ctrl'
+                };
+                this.$uibModalInstance = this.$uibModal.open(modalSettings);
+                this.$uibModalInstance.result.then(function () {
+                }, function () {
+                    if (_this.options.modalDismissed)
+                        _this.options.modalDismissed();
+                });
+                this.isOpen = true;
+            }
         };
         Factory.prototype.hideModal = function () {
             var modal = angular.element(this.modalElementSelector);
@@ -133,10 +136,14 @@ var AngularBootstrapFeedback;
             modalBackdrop.removeClass('hidden');
         };
         Factory.prototype.closeModal = function () {
-            this.$uibModalInstance.close();
-            this.destroyCanvas();
-            if (this.options.modalDismissed)
-                this.options.modalDismissed();
+            if (this.isOpen) {
+                this.$uibModalInstance.close();
+                this.destroyCanvas();
+                if (this.options.modalDismissed) {
+                    this.options.modalDismissed();
+                }
+                this.isOpen = false;
+            }
         };
         Factory.prototype.appendTransclodedContent = function () {
             var _this = this;

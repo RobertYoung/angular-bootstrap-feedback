@@ -42,3 +42,7 @@
     z-index: 9000;
 position: absolute;
 }
+
+.close-modal-button {
+ cursor: pointer;
+}

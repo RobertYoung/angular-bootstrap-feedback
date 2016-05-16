@@ -4,37 +4,38 @@
 module AngularBootstrapFeedback {
 
     export class Button implements ng.IComponentOptions {
-        public controller: any;
-        public templateUrl: any;
-        public transclude: boolean = true;
-        public bindings: any;
+        public controller:any;
+        public templateUrl:any;
+        public transclude:boolean = true;
+        public bindings:any;
 
         constructor() {
-          this.bindings = {
-            options: '=?'
-          };
-          this.controller = ['angularBootstrapFeedbackFactory', '$transclude', ButtonController];
-          this.templateUrl = 'angular.bootstrap.feedback.button.html';
+            this.bindings = {
+                options: '=?'
+            };
+            this.controller = ['angularBootstrapFeedbackFactory', '$transclude', ButtonController];
+            this.templateUrl = 'angular.bootstrap.feedback.button.html';
         }
     }
 
     class ButtonController {
-        options: IOptions;
+        options:IOptions;
 
-        constructor(private factory: IFactory, private transclude: ng.ITranscludeFunction) {}
+        constructor(private factory:IFactory, private transclude:ng.ITranscludeFunction) {
+        }
 
         $onInit() {
-          this.factory.setOptions(this.options);
+            this.factory.setOptions(this.options);
         }
 
         openModal() {
-          if (this.options.sendFeedbackButtonPressed) this.options.sendFeedbackButtonPressed();
+            if (this.options.sendFeedbackButtonPressed) this.options.sendFeedbackButtonPressed();
 
-          this.transclude((value) => {
-            this.factory.transcludedContent = value;
-          });
+            this.transclude((value) => {
+                this.factory.transcludedContent = value;
+            });
 
-          this.factory.openModal();
+            this.factory.openModal();
         }
 
         cancelScreenshotPressed() {
@@ -46,8 +47,8 @@ module AngularBootstrapFeedback {
         }
 
         takeScreenshotPressed() {
-          if (this.factory.options.takeScreenshotOptionsButtonPressed) this.factory.options.takeScreenshotOptionsButtonPressed();
-          this.factory.takeScreenshot();
+            if (this.factory.options.takeScreenshotOptionsButtonPressed) this.factory.options.takeScreenshotOptionsButtonPressed();
+            this.factory.takeScreenshot();
         }
     }
 }

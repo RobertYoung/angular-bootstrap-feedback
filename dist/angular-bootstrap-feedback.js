@@ -4,6 +4,7 @@
  * @version v1.0.0
  * @link https://robertyoung.github.io/angular-bootstrap-feedback/
  * @license MIT
+ * This file is auto-generated. Please modify the Typescript related file.
  */
 angular.module('angular.bootstrap.feedback', [
     'ui.bootstrap'

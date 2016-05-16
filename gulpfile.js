@@ -29,6 +29,7 @@ var banner = ['/**',
 ' * @version v<%= pkg.version %>',
 ' * @link <%= pkg.homepage %>',
 ' * @license <%= pkg.license %>',
+' * This file is auto-generated. Please modify the Typescript related file.',
 ' */',
 ''].join('\n');
 

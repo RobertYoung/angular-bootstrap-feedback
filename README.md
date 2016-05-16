@@ -1,7 +1,7 @@
 # angular-bootstrap-feedback
 [![Bower version](https://badge.fury.io/bo/angular-feedback.svg)](http://badge.fury.io/bo/angular-feedback)
 [![Build Status](https://travis-ci.org/andreipfeiffer/angular-feedback.svg?branch=master)](https://travis-ci.org/andreipfeiffer/angular-feedback)
-[![Coverage Status](https://coveralls.io/repos/andreipfeiffer/angular-feedback/badge.png?branch=master)](https://coveralls.io/r/andreipfeiffer/angular-feedback?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/RobertYoung/angular-bootstrap-feedback/badge.svg?branch=master)](https://coveralls.io/github/RobertYoung/angular-bootstrap-feedback?branch=master)
 
 # Overview
 A user feedback modal with screenshot and highlighting functionality built around Angular 1.5+.

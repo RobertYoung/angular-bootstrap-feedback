@@ -3,7 +3,7 @@
   "authors": [
     "Robert Young"
   ],
-  "description": "User feedback component for angular",
+  "description": "User feedback component for angular and bootstrap that allows the user to take a screenshot and highlight areas.",
   "main": [
     "./dist/angular-bootstrap-feedback.js",
     ".dist/angular-bootstrap-feedback-styles.css"

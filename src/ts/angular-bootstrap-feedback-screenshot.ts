@@ -21,6 +21,7 @@ module AngularBootstrapFeedback {
             // if (this.$detection.isAndroid() || this.$detection.isiOS() || this.$detection.isWindowsPhone() || this.$detection.isBB10()) {
             //     this.factory.takeScreenshot();
             // } else {
+                this.factory.showSendFeedback();
                 this.factory.hideModal();
                 this.factory.isScreenshotMode = true;
                 this.factory.createCanvas();

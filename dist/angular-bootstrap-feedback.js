@@ -46,6 +46,7 @@ var AngularBootstrapFeedback;
             this.factory.isScreenshotMode = false;
             this.factory.showModal();
             this.factory.destroyCanvas();
+            this.factory.hideSendFeedback();
         };
         ButtonController.prototype.takeScreenshotPressed = function () {
             if (this.factory.options.takeScreenshotOptionsButtonPressed)
@@ -54,7 +55,6 @@ var AngularBootstrapFeedback;
         };
         return ButtonController;
     }());
-    AngularBootstrapFeedback.ButtonController = ButtonController;
 })(AngularBootstrapFeedback || (AngularBootstrapFeedback = {}));
 angular
     .module('angular.bootstrap.feedback')
@@ -124,6 +124,7 @@ var AngularBootstrapFeedback;
                 if (_this.options.highlightDrawn)
                     _this.options.highlightDrawn(angular.element(highlight));
             };
+            this.isOpen = false;
         }
         Factory.prototype.hideSendFeedback = function () {
             var sendFeedback = angular.element(this.sendFeedbackElementSelector);
@@ -135,37 +136,55 @@ var AngularBootstrapFeedback;
         };
         Factory.prototype.openModal = function () {
             var _this = this;
-            var modalSettings = {
-                animation: true,
-                size: "lg",
-                template: this.$templateCache.get("angular.bootstrap.feedback.modal.html"),
-                controller: ['angularBootstrapFeedbackFactory', AngularBootstrapFeedback.ModalController],
-                controllerAs: '$ctrl'
-            };
-            this.$uibModalInstance = this.$uibModal.open(modalSettings);
-            this.$uibModalInstance.result.then(function () {
-            }, function () {
-                if (_this.options.modalDismissed)
-                    _this.options.modalDismissed();
-            });
+            if (!this.isOpen) {
+                this.hideSendFeedback();
+                var modalSettings = {
+                    animation: true,
+                    size: "lg",
+                    template: this.$templateCache.get("angular.bootstrap.feedback.modal.html"),
+                    controller: ['angularBootstrapFeedbackFactory', AngularBootstrapFeedback.ModalController],
+                    controllerAs: '$ctrl'
+                };
+                this.$uibModalInstance = this.$uibModal.open(modalSettings);
+                this.$uibModalInstance.result.then(function () {
+                }, function () {
+                    if (_this.options.modalDismissed) {
+                        _this.showSendFeedback();
+                        _this.options.modalDismissed();
+                        _this.isOpen = false;
+                    }
+                });
+                this.isOpen = true;
+            }
         };
         Factory.prototype.hideModal = function () {
-            var modal = angular.element(this.modalElementSelector);
-            var modalBackdrop = angular.element(this.modalBackdropElementSelector);
-            modal.addClass('hidden');
-            modalBackdrop.addClass('hidden');
+            if (this.isOpen) {
+                var modal = angular.element(this.modalElementSelector);
+                var modalBackdrop = angular.element(this.modalBackdropElementSelector);
+                modal.addClass('hidden');
+                modalBackdrop.addClass('hidden');
+                this.isOpen = false;
+            }
         };
         Factory.prototype.showModal = function () {
-            var modal = angular.element(this.modalElementSelector);
-            var modalBackdrop = angular.element(this.modalBackdropElementSelector);
-            modal.removeClass('hidden');
-            modalBackdrop.removeClass('hidden');
+            if (!this.isOpen) {
+                var modal = angular.element(this.modalElementSelector);
+                var modalBackdrop = angular.element(this.modalBackdropElementSelector);
+                modal.removeClass('hidden');
+                modalBackdrop.removeClass('hidden');
+                this.isOpen = true;
+            }
         };
         Factory.prototype.closeModal = function () {
-            this.$uibModalInstance.close();
-            this.destroyCanvas();
-            if (this.options.modalDismissed)
-                this.options.modalDismissed();
+            if (this.isOpen) {
+                this.showSendFeedback();
+                this.$uibModalInstance.close();
+                this.destroyCanvas();
+                if (this.options.modalDismissed) {
+                    this.options.modalDismissed();
+                }
+                this.isOpen = false;
+            }
         };
         Factory.prototype.appendTransclodedContent = function () {
             var _this = this;
@@ -192,7 +211,6 @@ var AngularBootstrapFeedback;
                 onrendered: function (canvas) {
                     _this.isScreenshotMode = false;
                     _this.showModal();
-                    _this.showSendFeedback();
                     _this.destroyCanvas();
                     canvas.style.width = '100%';
                     canvas.style.borderRadius = '12px';
@@ -296,6 +314,7 @@ var AngularBootstrapFeedback;
         ScreenshotController.prototype.takeScreenshotButtonPressed = function () {
             if (this.factory.options.takeScreenshotButtonPressed)
                 this.factory.options.takeScreenshotButtonPressed();
+            this.factory.showSendFeedback();
             this.factory.hideModal();
             this.factory.isScreenshotMode = true;
             this.factory.createCanvas();
@@ -308,5 +327,5 @@ angular
     .component('angularBootstrapFeedbackScreenshot', new AngularBootstrapFeedback.Screenshot());
 
 angular.module("angular.bootstrap.feedback").run(["$templateCache", function($templateCache) {$templateCache.put("angular.bootstrap.feedback.button.html","<div class=\"send-feedback\"><div ng-if=\"!$ctrl.factory.isScreenshotMode\" ng-click=\"$ctrl.openModal()\">{{$ctrl.factory.options.sendFeedbackButtonText}} <span class=\"glyphicon glyphicon-comment\" aria-hidden=\"true\"></span></div><div ng-if=\"$ctrl.factory.isScreenshotMode\"><span>Options</span><div class=\"row\"><div class=\"col-xs-12\"><button class=\"btn btn-danger col-xs-12\" ng-click=\"$ctrl.cancelScreenshotPressed()\">{{$ctrl.factory.options.cancelScreenshotOptionsButtonText}}</button></div></div><div class=\"row\"><div class=\"col-xs-12\"><button class=\"btn btn-success col-xs-12\" ng-click=\"$ctrl.takeScreenshotPressed()\">{{$ctrl.factory.options.takeScreenshotOptionsButtonText}}</button></div></div></div></div>");
-$templateCache.put("angular.bootstrap.feedback.modal.html","<form novalidate=\"\" name=\"userFeedbackForm\"><div class=\"modal-header\"><h3 class=\"modal-title pull-left\">{{$ctrl.factory.options.modalTitle}}</h3><a><i class=\"glyphicon glyphicon-remove pull-right add-margin-right-1\" style=\"font-size: 18px\" data-ng-click=\"$ctrl.closeModal(); $event.stopPropagation()\"></i></a></div><div class=\"modal-body\"></div><div class=\"modal-footer\"><button class=\"btn btn-primary\" type=\"submit\" ng-click=\"$ctrl.submitButtonPressed(userFeedbackForm)\">{{$ctrl.factory.options.submitButtonText}}</button></div></form>");
+$templateCache.put("angular.bootstrap.feedback.modal.html","<form novalidate=\"\" name=\"userFeedbackForm\"><div class=\"modal-header\"><h3 class=\"modal-title pull-left\">{{$ctrl.factory.options.modalTitle}}</h3><a><i class=\"glyphicon glyphicon-remove pull-right add-margin-right-1 close-modal-button\" style=\"font-size: 18px\" data-ng-click=\"$ctrl.closeModal(); $event.stopPropagation()\"></i></a></div><div class=\"modal-body\"></div><div class=\"modal-footer\"><button class=\"btn btn-primary\" type=\"submit\" ng-click=\"$ctrl.submitButtonPressed(userFeedbackForm)\">{{$ctrl.factory.options.submitButtonText}}</button></div></form>");
 $templateCache.put("angular.bootstrap.feedback.screenshot.html","<div class=\"feedback-screenshot\"><img ng-src=\"{{$ctrl.factory.screenshotBase64}}\"></div><div class=\"btn-toolbar\"><button class=\"btn btn-default\" type=\"button\" ng-click=\"$ctrl.takeScreenshotButtonPressed()\"><span class=\"glyphicon glyphicon-camera\" aria-hidden=\"true\"></span> {{$ctrl.factory.options.takeScreenshotButtonText}}</button></div>");}]);

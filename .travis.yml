@@ -4,9 +4,12 @@ node_js:
 
 before_script:
     - npm install --quiet -g gulp
+    - npm install --quiet -g http-server
     - npm install
-    - npm install --quiet -g bower
+    - npm run update-chromedriver
     - bower install
+    - npm install --quiet -g bower
+    - typings install
     - gulp build
 
 script: gulp karma:unit

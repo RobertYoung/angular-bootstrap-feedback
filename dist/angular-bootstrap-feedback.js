@@ -102,6 +102,7 @@ var AngularBootstrapFeedback;
                 if (_this.options.highlightDrawn)
                     _this.options.highlightDrawn(angular.element(highlight));
             };
+            this.isOpen = false;
         }
         Factory.prototype.hideSendFeedback = function () {
             var sendFeedback = angular.element(this.sendFeedbackElementSelector);
@@ -114,6 +115,7 @@ var AngularBootstrapFeedback;
         Factory.prototype.openModal = function () {
             var _this = this;
             if (!this.isOpen) {
+                this.hideSendFeedback();
                 var modalSettings = {
                     animation: true,
                     size: "lg",
@@ -124,26 +126,36 @@ var AngularBootstrapFeedback;
                 this.$uibModalInstance = this.$uibModal.open(modalSettings);
                 this.$uibModalInstance.result.then(function () {
                 }, function () {
-                    if (_this.options.modalDismissed)
+                    if (_this.options.modalDismissed) {
+                        _this.showSendFeedback();
                         _this.options.modalDismissed();
+                        _this.isOpen = false;
+                    }
                 });
                 this.isOpen = true;
             }
         };
         Factory.prototype.hideModal = function () {
-            var modal = angular.element(this.modalElementSelector);
-            var modalBackdrop = angular.element(this.modalBackdropElementSelector);
-            modal.addClass('hidden');
-            modalBackdrop.addClass('hidden');
+            if (this.isOpen) {
+                var modal = angular.element(this.modalElementSelector);
+                var modalBackdrop = angular.element(this.modalBackdropElementSelector);
+                modal.addClass('hidden');
+                modalBackdrop.addClass('hidden');
+                this.isOpen = false;
+            }
         };
         Factory.prototype.showModal = function () {
-            var modal = angular.element(this.modalElementSelector);
-            var modalBackdrop = angular.element(this.modalBackdropElementSelector);
-            modal.removeClass('hidden');
-            modalBackdrop.removeClass('hidden');
+            if (!this.isOpen) {
+                var modal = angular.element(this.modalElementSelector);
+                var modalBackdrop = angular.element(this.modalBackdropElementSelector);
+                modal.removeClass('hidden');
+                modalBackdrop.removeClass('hidden');
+                this.isOpen = true;
+            }
         };
         Factory.prototype.closeModal = function () {
             if (this.isOpen) {
+                this.showSendFeedback();
                 this.$uibModalInstance.close();
                 this.destroyCanvas();
                 if (this.options.modalDismissed) {

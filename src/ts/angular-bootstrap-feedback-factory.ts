@@ -76,6 +76,7 @@ module AngularBootstrapFeedback {
 
         constructor(private $uibModal:ng.ui.bootstrap.IModalService, private $document:ng.IDocumentService, private $templateCache:ng.ITemplateCacheService,
                     private $timeout:ng.ITimeoutService) {
+            this.isOpen = false;
         }
 
         // Send Feedback Methods //
@@ -92,6 +93,7 @@ module AngularBootstrapFeedback {
         // Modal Methods //
         openModal() {
             if (!this.isOpen) {
+                this.hideSendFeedback();
                 const modalSettings:ng.ui.bootstrap.IModalSettings = {
                     animation: true,
                     size: "lg",
@@ -104,7 +106,11 @@ module AngularBootstrapFeedback {
                 this.$uibModalInstance.result.then(() => {
 
                 }, () => {
-                    if (this.options.modalDismissed) this.options.modalDismissed();
+                    if (this.options.modalDismissed) {
+                        this.showSendFeedback();
+                        this.options.modalDismissed();
+                        this.isOpen = false;
+                    }
                 });
 
                 this.isOpen = true;
@@ -112,21 +118,28 @@ module AngularBootstrapFeedback {
         }
 
         hideModal() {
-            const modal = angular.element(this.modalElementSelector);
-            const modalBackdrop = angular.element(this.modalBackdropElementSelector);
-            modal.addClass('hidden');
-            modalBackdrop.addClass('hidden');
+            if (this.isOpen) {
+                const modal = angular.element(this.modalElementSelector);
+                const modalBackdrop = angular.element(this.modalBackdropElementSelector);
+                modal.addClass('hidden');
+                modalBackdrop.addClass('hidden');
+                this.isOpen = false;
+            }
         }
 
         showModal() {
-            const modal = angular.element(this.modalElementSelector);
-            const modalBackdrop = angular.element(this.modalBackdropElementSelector);
-            modal.removeClass('hidden');
-            modalBackdrop.removeClass('hidden');
+            if (!this.isOpen) {
+                const modal = angular.element(this.modalElementSelector);
+                const modalBackdrop = angular.element(this.modalBackdropElementSelector);
+                modal.removeClass('hidden');
+                modalBackdrop.removeClass('hidden');
+                this.isOpen = true;
+            }
         }
 
         closeModal() {
             if (this.isOpen) {
+                this.showSendFeedback();
                 this.$uibModalInstance.close();
                 this.destroyCanvas();
 

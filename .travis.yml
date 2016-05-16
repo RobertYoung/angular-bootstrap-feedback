@@ -10,5 +10,6 @@ before_script:
     - npm run update-chromedriver
     - npm install --quiet -g bower
     - bower install
+    - gulp build
 
 script: gulp karma:unit

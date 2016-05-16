@@ -3,12 +3,13 @@ node_js:
     - "4.2"
 
 before_script:
-    - "export DISPLAY=:99.0"
-    - "sh -e /etc/init.d/xvfb start"
+    - export CHROME_BIN=chromium-browser
+    - export DISPLAY=:99.0
+    - sh -e /etc/init.d/xvfb start
     - npm install --quiet -g gulp
+    - npm install --quiet -g bower
     - npm install
     - bower install
-    - npm install --quiet -g bower
     - typings install
     - gulp build
 

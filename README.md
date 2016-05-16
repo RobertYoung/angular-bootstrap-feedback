@@ -26,9 +26,8 @@ A user feedback modal with screenshot and highlighting functionality built aroun
 #### Manual
 Or, you can download source files straight from this repo, they're located in the `dist` folder.
 Just include the minified version of both `.js` and `.css` files.
-* src/css/angular.bootstrap.feedback.styles.css
-* src/lib/angular.bootstrap.feedback.output.js
-* src/lib/angular.bootstrap.feedback.templates.js
+* dist/angular-bootstrap-feedback-styles.css
+* dist/angular-bootstrap-feedback.js
 
 ###### Or, Minified
 * dist/angular.bootstrap.feedback.min.css

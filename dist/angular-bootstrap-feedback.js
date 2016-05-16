@@ -1,7 +1,7 @@
 /**
  * angular-bootstrap-feedback - User feedback form for angular with screenshot and highlighting
  * @author Robert Young
- * @version v1.0.0
+ * @version v1.0.2
  * @link https://robertyoung.github.io/angular-bootstrap-feedback/
  * @license MIT
  * This file is auto-generated. Please modify the Typescript related file.

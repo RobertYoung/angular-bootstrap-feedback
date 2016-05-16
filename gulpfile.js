@@ -46,7 +46,7 @@ gulp.task('styles', function() {
 	.pipe(csscomb())
 	.pipe(header(banner, {pkg: pkg}))
 	.pipe(rename({
-		basename: pkg.name + "-styles"
+		basename: pkg.name + ".styles"
 	}))
 	.pipe(gulp.dest(config.paths.dist))
 	.pipe(minifyCSS())

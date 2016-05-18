@@ -46,15 +46,16 @@ var AngularBootstrapFeedback;
             this.factory.isScreenshotMode = false;
             this.factory.showModal();
             this.factory.destroyCanvas();
-            this.factory.hideSendFeedback();
         };
         ButtonController.prototype.takeScreenshotPressed = function () {
             if (this.factory.options.takeScreenshotOptionsButtonPressed)
                 this.factory.options.takeScreenshotOptionsButtonPressed();
             this.factory.takeScreenshot();
         };
+        ButtonController.$inject = ['angularBootstrapFeedbackFactory', '$transclude'];
         return ButtonController;
     }());
+    AngularBootstrapFeedback.ButtonController = ButtonController;
 })(AngularBootstrapFeedback || (AngularBootstrapFeedback = {}));
 angular
     .module('angular.bootstrap.feedback')

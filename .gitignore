@@ -1,7 +1,4 @@
 typings
 *.log
 src/lib
-.idea
-node_modules
-bower_components
-npm-debug.log
+test/**/*.js

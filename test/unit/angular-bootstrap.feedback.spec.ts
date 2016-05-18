@@ -51,7 +51,7 @@ describe ('Unit Testing: Angular Bootstrap Feedback - Button Controller', () => 
       ctrl.options = options;
 
       spyOn(options, 'sendFeedbackButtonPressed');
-      spyOn(factory, 'openModal')
+      spyOn(factory, 'openModal');
   }));
 
   it('should exist', () => {

@@ -115,6 +115,10 @@ gulp.task('karma:unit', ['karma:typescript'], function (done) {
 	}, done).start();
 });
 
+gulp.task('karma:watch', ['karma:typescript'], function () {
+	gulp.watch("test/**/*.ts", ['karma:unit']);
+});
+
 gulp.task('karma:typescript', function () {
 	var tsconfig = ts.createProject(config.paths.tsconfig);
 	return gulp.src('test/**/*.ts')

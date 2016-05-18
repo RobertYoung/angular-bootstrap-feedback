@@ -62,6 +62,8 @@ module.exports = function(config) {
     // how many browser should be started simultaneous
     concurrency: Infinity,
 
+		singleRun: false,
+
     customLaunchers: {
       Chrome_travis_ci: {
         base: 'Chrome',
@@ -72,6 +74,7 @@ module.exports = function(config) {
 
   if(process.env.TRAVIS){
     configuration.browsers = ['Chrome_travis_ci'];
+    configuration.singleRun = true;
   }
 
   config.set(configuration);

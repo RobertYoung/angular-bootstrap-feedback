@@ -24,9 +24,9 @@ var AngularBootstrapFeedback;
     }());
     AngularBootstrapFeedback.Button = Button;
     var ButtonController = (function () {
-        function ButtonController(factory, transclude) {
+        function ButtonController(factory, $transclude) {
             this.factory = factory;
-            this.transclude = transclude;
+            this.$transclude = $transclude;
         }
         ButtonController.prototype.$onInit = function () {
             this.factory.setOptions(this.options);
@@ -35,7 +35,7 @@ var AngularBootstrapFeedback;
             var _this = this;
             if (this.options.sendFeedbackButtonPressed)
                 this.options.sendFeedbackButtonPressed();
-            this.transclude(function (value) {
+            this.$transclude(function (value) {
                 _this.factory.transcludedContent = value;
             });
             this.factory.openModal();
@@ -52,7 +52,6 @@ var AngularBootstrapFeedback;
                 this.factory.options.takeScreenshotOptionsButtonPressed();
             this.factory.takeScreenshot();
         };
-        ButtonController.$inject = ['angularBootstrapFeedbackFactory', '$transclude'];
         return ButtonController;
     }());
     AngularBootstrapFeedback.ButtonController = ButtonController;

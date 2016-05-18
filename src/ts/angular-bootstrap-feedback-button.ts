@@ -21,8 +21,7 @@ module AngularBootstrapFeedback {
     export class ButtonController {
         options: IOptions;
 
-        static $inject = ['angularBootstrapFeedbackFactory', '$transclude'];
-        constructor(private factory: IFactory, private transclude: ng.ITranscludeFunction) {}
+        constructor(private factory: IFactory, private $transclude: ng.ITranscludeFunction) {}
 
         $onInit() {
           this.factory.setOptions(this.options);
@@ -31,7 +30,7 @@ module AngularBootstrapFeedback {
         openModal() {
           if (this.options.sendFeedbackButtonPressed) this.options.sendFeedbackButtonPressed();
 
-          this.transclude((value) => {
+          this.$transclude((value) => {
             this.factory.transcludedContent = value;
           });
 

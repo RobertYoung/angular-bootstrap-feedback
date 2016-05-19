@@ -2,16 +2,20 @@ language: node_js
 node_js:
     - "4.2"
 
-before_script:
+before_install:
     - export CHROME_BIN=chromium-browser
     - export DISPLAY=:99.0
     - sh -e /etc/init.d/xvfb start
     - npm install -g gulp
     - npm install -g bower
     - npm install -g typings
+
+install:
     - npm install
     - bower install
     - typings install
+
+before_script:
     - gulp build
 
 script: gulp karma:unit

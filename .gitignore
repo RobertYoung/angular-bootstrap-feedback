@@ -2,3 +2,4 @@ typings
 *.log
 src/lib
 test/**/*.js
+**/*.js.map

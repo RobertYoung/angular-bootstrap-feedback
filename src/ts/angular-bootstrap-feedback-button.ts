@@ -13,7 +13,8 @@ module AngularBootstrapFeedback {
           this.bindings = {
             options: '=?'
           };
-          this.controller = ['angularBootstrapFeedbackFactory', '$transclude', ButtonController];
+          // this.controller = ['angularBootstrapFeedbackFactory', '$transclude', ButtonController];
+          this.controller = ButtonController;
           this.templateUrl = 'angular.bootstrap.feedback.button.html';
         }
     }
@@ -21,6 +22,7 @@ module AngularBootstrapFeedback {
     export class ButtonController {
         options: IOptions;
 
+        static $inject = ['angularBootstrapFeedbackFactory', '$transclude'];
         constructor(private factory: IFactory, private $transclude: ng.ITranscludeFunction) {}
 
         $onInit() {

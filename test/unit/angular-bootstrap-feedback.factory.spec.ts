@@ -19,7 +19,7 @@ describe('Unit Testing: Angular Bootstrap Feedback - Factory', () => {
 
   beforeEach(angular.mock.module('angular.bootstrap.feedback'));
 
-  beforeEach(angular.mock.inject(($injector, _$uibModal_, _$document_, _$templateCache_, _$timeout_) => {
+  beforeEach(angular.mock.inject(($injector, $uibModal, $document, $templateCache, $timeout) => {
     factory = new AngularBootstrapFeedback.Factory($uibModal, $document, $templateCache, $timeout);
   }));
 
@@ -32,7 +32,7 @@ describe('Unit Testing: Angular Bootstrap Feedback - Factory', () => {
   afterEach(function() {
       elementSpy.and.callThrough();
   });
-  
+
   it('should exist', () => {
     expect(factory).toBeDefined();
   });
@@ -47,5 +47,21 @@ describe('Unit Testing: Angular Bootstrap Feedback - Factory', () => {
     factory.showSendFeedback();
     expect(angular.element).toHaveBeenCalled();
     expect(mockElement.removeClass).toHaveBeenCalledWith('hidden');
+  });
+
+  it('should open the modal if it is not open', () => {
+    spyOn(factory, 'hideSendFeedback');
+    factory.isOpen = false;
+    factory.openModal();
+    expect(factory.hideSendFeedback).toHaveBeenCalled();
+    expect(factory.isOpen).toBeTruthy();
+  });
+
+  it('should not open the modal if it is already open', () => {
+    spyOn(factory, 'hideSendFeedback');
+    factory.isOpen = true;
+    factory.openModal();
+    expect(factory.hideSendFeedback).not.toHaveBeenCalled();
+    expect(factory.isOpen).toBeTruthy();
   });
 });

@@ -13,7 +13,8 @@ describe('Unit Testing: Angular Bootstrap Feedback - Factory', () => {
   var $templateCache:ng.ITemplateCacheService
   var $timeout:ng.ITimeoutService;
   var mockElement: ng.IAugmentedJQuery = <ng.IAugmentedJQuery>{
-    addClass: (className: string) => {return null}
+    addClass: (className: string) => {return null},
+    removeClass: (className: string) => {return null}
   };
 
   beforeEach(angular.mock.module('angular.bootstrap.feedback'));
@@ -24,12 +25,14 @@ describe('Unit Testing: Angular Bootstrap Feedback - Factory', () => {
 
   beforeEach(() => {
     spyOn(mockElement, 'addClass');
+    spyOn(mockElement, 'removeClass');
     elementSpy = spyOn(angular, 'element').and.returnValue(mockElement);
   });
 
   afterEach(function() {
       elementSpy.and.callThrough();
   });
+  
   it('should exist', () => {
     expect(factory).toBeDefined();
   });
@@ -38,5 +41,11 @@ describe('Unit Testing: Angular Bootstrap Feedback - Factory', () => {
     factory.hideSendFeedback();
     expect(angular.element).toHaveBeenCalled();
     expect(mockElement.addClass).toHaveBeenCalledWith('hidden');
+  });
+
+  it('should show the send feedback button', () => {
+    factory.showSendFeedback();
+    expect(angular.element).toHaveBeenCalled();
+    expect(mockElement.removeClass).toHaveBeenCalledWith('hidden');
   });
 });

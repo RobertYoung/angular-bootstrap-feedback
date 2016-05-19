@@ -6,8 +6,7 @@ module AngularBootstrapFeedback {
     export interface IFactory {
         isScreenshotMode:boolean;
         transcludedContent:any;
-        // $uibModalInstance: ng.ui.bootstrap.IModalServiceInstance,
-
+        
         screenshotBase64:string;
 
         // Options
@@ -28,11 +27,6 @@ module AngularBootstrapFeedback {
         // Document Events
         setupDocumentEvents();
 
-        // // User Information //
-        // getUserAgentInfo();
-        // getState();
-        // getUrl();
-
         // Send Feedback Methods //
         showSendFeedback();
         hideSendFeedback();
@@ -50,7 +44,6 @@ module AngularBootstrapFeedback {
 
 
     export class Factory {
-        static $inject = ['$uibModal', '$document', '$templateCache', '$timeout'];
         static CANVAS_ID:string = 'feedback-canvas';
         static FEEDBACK_HIGHLIGHT_CLASS:string = 'feedback-highlight';
 
@@ -78,6 +71,8 @@ module AngularBootstrapFeedback {
         // Transclude
         private transcludedContent:any;
         private isOpen:boolean;
+
+        static $inject = ['$uibModal', '$document', '$templateCache', '$timeout'];
 
         constructor(private $uibModal:ng.ui.bootstrap.IModalService, private $document:ng.IDocumentService, private $templateCache:ng.ITemplateCacheService,
                     private $timeout:ng.ITimeoutService) {
@@ -174,35 +169,6 @@ module AngularBootstrapFeedback {
             this.options.cancelScreenshotOptionsButtonText = options.cancelScreenshotOptionsButtonText ? options.cancelScreenshotOptionsButtonText : 'Cancel';
             this.options.takeScreenshotOptionsButtonText = options.takeScreenshotOptionsButtonText ? options.takeScreenshotOptionsButtonText : 'Take Screenshot';
         }
-
-        // User Information //
-        getUserAgentInfo() {
-            // const browser: UAParser.IBrowser = this.uaParser.getBrowser();
-            // const device: UAParser.IDevice = this.uaParser.getDevice();
-            // const cpu: UAParser.ICPU = this.uaParser.getCPU();
-            // const engine: UAParser.IEngine = this.uaParser.getEngine();
-            // const os: UAParser.IEngine = this.uaParser.getOS();
-            //
-            // this.userFeedback.browser = browser.name;
-            // this.userFeedback.browserVersion = browser.version;
-            // this.userFeedback.cpuArchitecture = cpu.architecture;
-            // this.userFeedback.deviceType = device.type;
-            // this.userFeedback.deviceModel = device.model;
-            // this.userFeedback.deviceVendor = device.vendor;
-            // this.userFeedback.engineName = engine.name;
-            // this.userFeedback.engineVersion = engine.version;
-            // this.userFeedback.os = os.name;
-            // this.userFeedback.osVersion = os.version;
-        }
-
-        // getState() {
-        //     this.userFeedback.state = this.$state.current.name;
-        //     this.userFeedback.stateParams = JSON.stringify(this.$state.params);
-        // }
-        //
-        // getUrl() {
-        //     this.userFeedback.url = this.$location.absUrl();
-        // }
 
         // Screenshot Methods //
         takeScreenshot() {

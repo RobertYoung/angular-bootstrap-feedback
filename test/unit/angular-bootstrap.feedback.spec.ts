@@ -32,7 +32,7 @@ describe('Unit Testing: Angular Bootstrap Feedback - Button', () => {
 describe ('Unit Testing: Angular Bootstrap Feedback - Button Controller', () => {
 
   var ctrl: AngularBootstrapFeedback.ButtonController;
-  var $componentController: any;
+  var $componentController: angular.IComponentControllerService;
   var factory: AngularBootstrapFeedback.IFactory;
   var options: AngularBootstrapFeedback.IOptions = <AngularBootstrapFeedback.IOptions>{
     sendFeedbackButtonPressed: () => {},
@@ -49,11 +49,13 @@ describe ('Unit Testing: Angular Bootstrap Feedback - Button Controller', () => 
     scope = $injector.get('$rootScope').$new();
     $transclude = (cloneAttach: ng.ICloneAttachFunction) => {};
 
-    ctrl = $componentController('angularBootstrapFeedback',
-    {
-      '$transclude': $transclude,
-      'factory': factory
-    });
+    ctrl = $componentController<AngularBootstrapFeedback.ButtonController, any>(
+              "angularBootstrapFeedback",
+              {
+                $scope: <ng.IScope>{} ,
+                $transclude: $transclude,
+                factory: factory
+              });
 
     ctrl.options = options;
 

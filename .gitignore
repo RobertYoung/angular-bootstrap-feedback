@@ -3,3 +3,5 @@ typings
 src/lib
 test/**/*.js
 **/*.js.map
+src/**/*.js
+src/**/*.js.map

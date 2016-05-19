@@ -1,12 +1,12 @@
 ﻿/// <reference path="../../typings/main.d.ts"/>
 /// <reference path="./angular-bootstrap-feedback.ts"/>
-/// <reference path="./angular-bootstrap-feedback-modal.ts" />
+/// <reference path="./angular-bootstrap-feedback.modal.ts" />
 
 module AngularBootstrapFeedback {
     export interface IFactory {
         isScreenshotMode:boolean;
         transcludedContent:any;
-        
+
         screenshotBase64:string;
 
         // Options

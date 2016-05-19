@@ -204,8 +204,6 @@ var AngularBootstrapFeedback;
             this.options.cancelScreenshotOptionsButtonText = options.cancelScreenshotOptionsButtonText ? options.cancelScreenshotOptionsButtonText : 'Cancel';
             this.options.takeScreenshotOptionsButtonText = options.takeScreenshotOptionsButtonText ? options.takeScreenshotOptionsButtonText : 'Take Screenshot';
         };
-        Factory.prototype.getUserAgentInfo = function () {
-        };
         Factory.prototype.takeScreenshot = function () {
             var _this = this;
             var options = {
@@ -290,9 +288,9 @@ var AngularBootstrapFeedback;
                 _this.ctx.fillRect(parseInt(highlight.style.left), parseInt(highlight.style.top), parseInt(highlight.style.width), parseInt(highlight.style.height));
             });
         };
-        Factory.$inject = ['$uibModal', '$document', '$templateCache', '$timeout'];
         Factory.CANVAS_ID = 'feedback-canvas';
         Factory.FEEDBACK_HIGHLIGHT_CLASS = 'feedback-highlight';
+        Factory.$inject = ['$uibModal', '$document', '$templateCache', '$timeout'];
         return Factory;
     }());
     AngularBootstrapFeedback.Factory = Factory;

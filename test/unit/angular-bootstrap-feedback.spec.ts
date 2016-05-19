@@ -1,8 +1,8 @@
 /// <reference path="../../typings/main.d.ts"/>
 /// <reference path="../../src/ts/angular-bootstrap-feedback.ts" />
-/// <reference path="../../src/ts/angular-bootstrap-feedback-button.ts" />
-/// <reference path="../../src/ts/angular-bootstrap-feedback-options.ts" />
-/// <reference path="../../src/ts/angular-bootstrap-feedback-factory.ts" />
+/// <reference path="../../src/ts/angular-bootstrap-feedback.button.ts" />
+/// <reference path="../../src/ts/angular-bootstrap-feedback.options.ts" />
+/// <reference path="../../src/ts/angular-bootstrap-feedback.factory.ts" />
 
 describe('Unit Testing: Angular Bootstrap Feedback - Button', () => {
 

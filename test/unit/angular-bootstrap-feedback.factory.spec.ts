@@ -64,4 +64,13 @@ describe('Unit Testing: Angular Bootstrap Feedback - Factory', () => {
     expect(factory.hideSendFeedback).not.toHaveBeenCalled();
     expect(factory.isOpen).toBeTruthy();
   });
+
+  it('should close the modal', () => {
+    factory.openModal();
+    factory.options.modalDismissed = () => {};
+    spyOn(factory.options, 'modalDismissed');
+    factory.isOpen = true;
+    factory.closeModal();
+    expect(factory.options.modalDismissed).toHaveBeenCalled();
+  });
 });

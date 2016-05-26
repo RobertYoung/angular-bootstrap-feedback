@@ -36,7 +36,8 @@ describe ('Unit Testing: Angular Bootstrap Feedback - Button Controller', () => 
   var factory: AngularBootstrapFeedback.IFactory;
   var options: AngularBootstrapFeedback.IOptions = <AngularBootstrapFeedback.IOptions>{
     sendFeedbackButtonPressed: () => {},
-    cancelScreenshotOptionsButtonPressed: () => {}
+    cancelScreenshotOptionsButtonPressed: () => {},
+    takeScreenshotOptionsButtonPressed: () => {}
   };
   var scope: ng.IScope;
   var $transclude: any;
@@ -61,8 +62,10 @@ describe ('Unit Testing: Angular Bootstrap Feedback - Button Controller', () => 
 
     spyOn(options, 'sendFeedbackButtonPressed');
     spyOn(options, 'cancelScreenshotOptionsButtonPressed');
+    spyOn(options, 'takeScreenshotOptionsButtonPressed');
     spyOn(factory, 'openModal');
     spyOn(factory, 'showModal');
+    spyOn(factory, 'takeScreenshot');
     spyOn(factory, 'destroyCanvas');
     spyOn(factory, 'setOptions').and.callThrough();
   }));
@@ -87,5 +90,12 @@ describe ('Unit Testing: Angular Bootstrap Feedback - Button Controller', () => 
     expect(factory.isScreenshotMode).toBeFalsy();
     expect(factory.showModal).toHaveBeenCalled();
     expect(factory.destroyCanvas).toHaveBeenCalled();
+  });
+
+  it('should take a screenshot', () => {
+    ctrl.$onInit();
+    ctrl.takeScreenshotPressed();
+    expect(options.takeScreenshotOptionsButtonPressed).toHaveBeenCalled();
+    expect(factory.takeScreenshot).toHaveBeenCalled();
   });
 });

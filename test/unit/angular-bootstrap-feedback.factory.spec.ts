@@ -74,4 +74,60 @@ describe('Unit Testing: Angular Bootstrap Feedback - Factory', () => {
     factory.closeModal();
     expect(factory.options.modalDismissed).toHaveBeenCalled();
   });
+
+  it('should set the options if provided', () => {
+    let opt = {
+      modalTitle: "modalTitle",
+      takeScreenshotButtonText: "takeScreenshotButtonText",
+      submitButtonText: "submitButtonText",
+      sendFeedbackButtonText: "sendFeedbackButtonText",
+      cancelScreenshotOptionsButtonText: "cancelScreenshotOptionsButtonText",
+      takeScreenshotOptionsButtonText: "takeScreenshotOptionsButtonText",
+
+      // Button Events
+      takeScreenshotButtonPressed: () => {},
+      submitButtonPressed: (form: ng.IFormController) => {},
+      sendFeedbackButtonPressed: () => {},
+      cancelScreenshotOptionsButtonPressed: () => {},
+      takeScreenshotOptionsButtonPressed: () => {},
+
+      // Screenshot Events
+      screenshotTaken: (image: string, canvas: HTMLCanvasElement) => {},
+      highlightDrawn: (element: ng.IAugmentedJQuery) => {},
+
+      // Modal Events
+      modalDismissed: () => {}
+    };
+
+    factory.setOptions(opt);
+    expect(factory.options).toBe(opt);
+  });
+
+  it('should set the default options', () => {
+    factory.setOptions({});
+    expect(factory.options.modalTitle).toBe('Feedback');
+    expect(factory.options.takeScreenshotButtonText).toBe('Take Screenshot');
+    expect(factory.options.submitButtonText).toBe('Submit');
+    expect(factory.options.sendFeedbackButtonText).toBe('Send Feedback');
+    expect(factory.options.cancelScreenshotOptionsButtonText).toBe('Cancel');
+    expect(factory.options.takeScreenshotOptionsButtonText).toBe('Take Screenshot');
+  });
+
+  it('should take a screenshot', () => {
+    spyOn(factory, 'hideModal');
+    spyOn(factory, 'hideSendFeedback');
+
+    factory.takeScreenshot();
+
+    expect(factory.hideModal).toHaveBeenCalled();
+    expect(factory.hideSendFeedback).toHaveBeenCalled();
+  });
+
+  it('should reset the screenshot', () => {
+    factory.screenshotBase64 = "abc";
+    factory.resetScreenshot();
+    expect(factory.screenshotBase64).toBe(null);
+  });
+
+  
 });

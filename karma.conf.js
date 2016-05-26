@@ -22,7 +22,7 @@ module.exports = function(config) {
       './bower_components/angular-mocks/angular-mocks.js',
 
       // Source
-      './dist/angular-bootstrap-feedback.js',
+      './src/lib/*.js',
 
       // Tests
       './test/unit/**/*.spec.js'

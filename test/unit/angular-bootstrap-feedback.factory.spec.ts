@@ -14,7 +14,8 @@ describe('Unit Testing: Angular Bootstrap Feedback - Factory', () => {
   var $timeout:ng.ITimeoutService;
   var mockElement: ng.IAugmentedJQuery = <ng.IAugmentedJQuery>{
     addClass: (className: string) => {return null},
-    removeClass: (className: string) => {return null}
+    removeClass: (className: string) => {return null},
+    remove: () => {}
   };
 
   beforeEach(angular.mock.module('angular.bootstrap.feedback'));
